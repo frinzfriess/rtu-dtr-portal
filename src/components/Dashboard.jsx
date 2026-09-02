@@ -4,7 +4,8 @@ import {
   LogOut, Clock, CalendarDays, Building2, GraduationCap, User, 
   Trash2, Edit, X, Save, FileSpreadsheet, Search, Calculator, 
   Sparkles, CheckCircle2, Terminal, UtensilsCrossed, LayoutDashboard, 
-  FileText, UserCheck, ChevronRight, PlusCircle, Shield, Award, Sun, Moon
+  FileText, UserCheck, ChevronRight, PlusCircle, Shield, Award, Sun, Moon,
+  TrendingUp, Activity, CheckCircle, ArrowUpRight
 } from 'lucide-react';
 import { calculateHoursRendered, getGreeting, formatDateString, getCurrentTime } from '../utils';
 
@@ -334,72 +335,148 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
           </div>
         </header>
 
-        {/* Tab Content Container with strict box-sizing & max-w constraints */}
+        {/* Tab Content Container */}
         <div className="p-3 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto space-y-6 box-border overflow-hidden">
 
-          {/* OVERVIEW TAB */}
+          {/* IMPROVED DASHBOARD OVERVIEW TAB */}
           {activeTab === 'overview' && (
             <div className="space-y-6 animate-fadeIn w-full box-border">
+              
+              {/* Welcome Banner Card */}
+              <div className="bg-gradient-to-r from-cyan-600 via-teal-600 to-indigo-600 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden flex flex-col justify-between">
+                <div className="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                  <Activity className="w-64 h-64" />
+                </div>
+                <div className="relative z-10">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-white/20 px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase backdrop-blur-md">RTU OJT Portal</span>
+                    <span className="bg-emerald-500/30 text-emerald-200 px-2.5 py-1 rounded-full text-[10px] font-mono font-bold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Active Semester
+                    </span>
+                  </div>
+                  <h3 className="text-2xl sm:text-3xl font-black tracking-tight mb-2">Welcome back, {profile.full_name || 'Student'}!</h3>
+                  <p className="text-xs sm:text-sm text-cyan-100 max-w-xl font-sans mb-6">
+                    You have completed <strong className="text-white">{progressPercentage.toFixed(1)}%</strong> of your internship requirement at <strong className="text-white">{profile.company_name || 'Assigned Company'}</strong>.
+                  </p>
+                </div>
+
+                <div className="relative z-10 flex flex-wrap items-center gap-3 font-mono">
+                  <button onClick={() => setActiveTab('log')} className="bg-white text-slate-950 font-black px-5 py-3 rounded-2xl shadow-lg transition-all text-xs flex items-center gap-2 hover:bg-cyan-50 active:scale-95">
+                    <PlusCircle className="w-4 h-4 text-cyan-600"/> Log Hours Today
+                  </button>
+                  <button onClick={exportStyledExcel} className="bg-black/20 hover:bg-black/30 text-white font-bold px-5 py-3 rounded-2xl transition-all text-xs border border-white/20 flex items-center gap-2 backdrop-blur-md">
+                    <FileSpreadsheet className="w-4 h-4 text-emerald-300"/> Export DTR Excel
+                  </button>
+                </div>
+              </div>
+
+              {/* Stats Cards Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full box-border">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Total Rendered</span>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border flex flex-col justify-between">
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Total Rendered</span>
                     <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-2.5 rounded-2xl border border-cyan-500/20"><Clock className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-slate-900 dark:text-white mb-2">{totalHours.toFixed(2)}<span className="text-base text-cyan-500">h</span></h3>
-                  <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800">
+                  <div>
+                    <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{totalHours.toFixed(2)}<span className="text-sm font-bold text-cyan-500"> hrs</span></h3>
+                    <p className="text-[11px] font-mono text-slate-400">Target: {profile.required_hours} hours</p>
+                  </div>
+                  <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800 mt-4">
                     <div className="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Days Present</span>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border flex flex-col justify-between">
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Days Logged</span>
                     <div className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-2xl border border-indigo-500/20"><CalendarDays className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{dtr.length}</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Recorded shifts</p>
+                  <div>
+                    <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{dtr.length}</h3>
+                    <p className="text-[11px] font-mono text-slate-400">Total shifts recorded</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-cyan-600 dark:text-cyan-400">
+                    <span>Attendance Rate</span>
+                    <span className="font-bold">100%</span>
+                  </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Hours Remaining</span>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border flex flex-col justify-between">
+                  <div className="flex justify-between items-start mb-3">
+                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Hours Remaining</span>
                     <div className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 p-2.5 rounded-2xl border border-emerald-500/20"><Award className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-base">h</span></h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{progressPercentage.toFixed(1)}% completed</p>
+                  <div>
+                    <h3 className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-sm font-bold"> hrs</span></h3>
+                    <p className="text-[11px] font-mono text-slate-400">{progressPercentage.toFixed(1)}% completed</p>
+                  </div>
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
+                    <span>Status</span>
+                    <span className="font-bold">{remainingHours <= 0 ? 'Completed 🎉' : 'On Track'}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 w-full box-border">
-                <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white border border-cyan-500/30 p-5 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between w-full box-border">
+              {/* Quick Profile & Recent Activity Summary */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 w-full box-border">
+                
+                {/* Profile Card */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft flex flex-col justify-between transition-colors">
                   <div>
-                    <span className="text-xs font-mono font-bold text-cyan-200 uppercase tracking-widest block mb-2">Ready to work?</span>
-                    <h3 className="text-xl sm:text-2xl font-black text-white mb-3">Log your OJT hours instantly</h3>
-                    <p className="text-xs sm:text-sm text-cyan-100 mb-6 font-sans">Keep your timesheet up to date and generate official RTU DTR spreadsheet exports instantly.</p>
-                  </div>
-                  <div className="flex flex-wrap gap-3 font-mono">
-                    <button onClick={() => setActiveTab('log')} className="bg-white text-slate-950 font-black px-5 py-3 rounded-2xl shadow-lg transition-all text-xs flex items-center gap-2 hover:bg-cyan-50">
-                      <PlusCircle className="w-4 h-4"/> Log New Hours Now
-                    </button>
-                    <button onClick={() => setActiveTab('history')} className="bg-black/20 hover:bg-black/30 text-white font-bold px-5 py-3 rounded-2xl transition-all text-xs border border-white/20">
-                      View All Records
-                    </button>
-                  </div>
-                </div>
-
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl flex flex-col justify-between shadow-soft transition-colors w-full box-border">
-                  <div>
-                    <h3 className="text-sm font-black font-mono text-slate-900 dark:text-white mb-4 uppercase tracking-wider flex items-center gap-2"><User className="w-4 h-4 text-cyan-500"/> Quick Profile</h3>
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-xs font-black font-mono text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2"><User className="w-4 h-4 text-cyan-500"/> Profile Overview</h3>
+                      <button onClick={() => setActiveTab('profile')} className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 hover:underline">Edit</button>
+                    </div>
                     <div className="space-y-3 text-xs font-mono">
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Name</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.full_name || 'Not Set'}</span></div>
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Company</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.company_name}</span></div>
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">School</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.school}</span></div>
+                      <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <span className="text-slate-400 block text-[9px] uppercase">Full Name</span> 
+                        <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.full_name || 'Not Set'}</span>
+                      </div>
+                      <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <span className="text-slate-400 block text-[9px] uppercase">Company Site</span> 
+                        <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.company_name}</span>
+                      </div>
+                      <div className="bg-slate-50 dark:bg-slate-950 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                        <span className="text-slate-400 block text-[9px] uppercase">School</span> 
+                        <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.school}</span>
+                      </div>
                     </div>
                   </div>
-                  <button onClick={() => setActiveTab('profile')} className="mt-6 text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1">Edit Profile details &rarr;</button>
                 </div>
+
+                {/* Recent Logs Preview */}
+                <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft flex flex-col justify-between transition-colors">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xs font-black font-mono text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2"><FileText className="w-4 h-4 text-cyan-500"/> Recent DTR Logs</h3>
+                    <button onClick={() => setActiveTab('history')} className="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1">View All ({dtr.length}) &rarr;</button>
+                  </div>
+
+                  {dtr.length === 0 ? (
+                    <div className="py-8 text-center text-slate-400 font-mono text-xs">No records logged yet. Click "Log Hours Today" to start.</div>
+                  ) : (
+                    <div className="space-y-2.5 font-mono">
+                      {dtr.slice(0, 3).map((entry) => (
+                        <div key={entry.id} className="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 text-xs">
+                          <div className="flex items-center gap-3">
+                            <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-2 rounded-xl">
+                              <CheckCircle className="w-4 h-4"/>
+                            </div>
+                            <div>
+                              <p className="font-bold text-slate-900 dark:text-white">{formatDateString(entry.date)}</p>
+                              <p className="text-[10px] text-slate-400">{entry.time_in.substring(0, 5)} - {entry.time_out.substring(0, 5)}</p>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <span className="px-2.5 py-1 rounded-lg text-xs font-bold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">{entry.hours_rendered}h</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
               </div>
+
             </div>
           )}
 
@@ -599,7 +676,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                   <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">Required OJT Hours Goal</label>
-                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-600 dark:text-cyan-400text-sm" />
+                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-600 dark:text-cyan-400 text-sm" />
                 </div>
               </div>
             </div>
