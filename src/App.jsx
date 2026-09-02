@@ -18,13 +18,13 @@ export default function App() {
   }, [])
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-[100dvh] bg-[#F8FAFC]">
+    <div className="flex items-center justify-center min-h-screen bg-slate-50">
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-10 h-10 text-indigo-600 animate-spin" />
-        <p className="text-slate-500 font-medium tracking-wide animate-pulse">Starting Workspace...</p>
+        <p className="text-slate-500 font-medium tracking-wide animate-pulse">Loading Workspace...</p>
       </div>
     </div>
   )
 
-  return <div className="min-h-[100dvh] w-full bg-[#F8FAFC] font-sans">{!session ? <Auth /> : <Dashboard session={session} />}</div>
+  return <div className="min-h-screen w-full bg-slate-50 font-sans">{!session ? <Auth /> : <Dashboard session={session} />}</div>
 }

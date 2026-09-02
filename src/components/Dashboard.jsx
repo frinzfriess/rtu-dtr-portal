@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import DtrForm from './DtrForm';
-import { LogOut, Clock, CalendarDays, Building2, GraduationCap, User, Trash2, Edit2, X, FileSpreadsheet, Search, SearchX, Briefcase } from 'lucide-react';
-import { calculateHoursRendered, getGreeting, formatDateString } from '../utils';
+import { LogOut, Clock, CalendarDays, Building2, GraduationCap, User, Trash2, Edit2, X, FileSpreadsheet, Search, SearchX, Briefcase, CheckCircle2 } from 'lucide-react';
+import { calculateHoursRendered, formatDateString } from '../utils';
 
 export default function Dashboard({ session }) {
   const [profile, setProfile] = useState(null);
@@ -122,234 +122,246 @@ export default function Dashboard({ session }) {
   const filteredDtr = dtr.filter(e => e.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) || e.date.includes(searchTerm));
 
   return (
-    <div className="w-full relative pb-24 sm:pb-12 bg-[#F8FAFC]">
+    <div className="w-full flex flex-col min-h-screen">
       
-      {/* Dynamic Edit Modal (Mobile Bottom Sheet / Desktop Modal) */}
+      {/* Edit Modal - True Responsive Design (No Overflowing) */}
       {editingEntry && (
-        <div className="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-end sm:items-center justify-center z-[100] transition-all p-0 sm:p-4">
-          <div className="bg-white w-full sm:max-w-md rounded-t-[2rem] sm:rounded-[2rem] p-6 sm:p-8 shadow-2xl relative border border-slate-100 animate-[slideUp_0.3s_ease-out] sm:animate-none">
-            <div className="w-12 h-1.5 bg-slate-200 rounded-full mx-auto mb-6 sm:hidden"></div>
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/40 backdrop-blur-sm p-0 sm:p-4 transition-opacity">
+          <div className="w-full sm:max-w-md bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl flex flex-col max-h-[90vh] sm:max-h-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-5 border-b border-slate-100 flex-shrink-0">
+              <h3 className="text-xl font-black text-slate-800">Edit Record</h3>
+              <button onClick={() => setEditingEntry(null)} className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"><X className="w-4 h-4 text-slate-600" /></button>
+            </div>
             
-            <button onClick={() => setEditingEntry(null)} className="absolute top-6 right-6 text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-100 p-2 rounded-full transition-all"><X className="w-5 h-5" /></button>
-            <h3 className="text-2xl font-black text-slate-800 mb-6 flex items-center gap-2">Edit Record</h3>
-            
-            <div className="space-y-4">
+            {/* Modal Scrollable Body */}
+            <div className="p-5 overflow-y-auto space-y-4">
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">Date</label>
-                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-[3px] focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1">Date</label>
+                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
               </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">Time In</label>
-                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-[3px] focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="w-full">
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1 truncate">Time In</label>
+                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-2 sm:px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
                 </div>
-                <div className="flex-1">
-                  <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">Time Out</label>
-                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-[3px] focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
+                <div className="w-full">
+                  <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1 truncate">Time Out</label>
+                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-2 sm:px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
                 </div>
               </div>
               <div>
-                <label className="block text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-1.5 ml-2">Remarks</label>
-                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-4 py-3.5 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-[3px] focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wide mb-1.5 ml-1">Remarks</label>
+                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 font-bold outline-none text-slate-700" />
               </div>
-              <label className="flex items-center space-x-3 cursor-pointer mt-2 bg-slate-50 p-4 rounded-2xl border border-slate-200 select-none">
-                <div className={`w-5 h-5 rounded flex items-center justify-center border transition-colors ${deductLunchEdit ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-300'}`}>
-                   {deductLunchEdit && <CheckCircle2 className="w-3.5 h-3.5 text-white" />}
+              <label className="flex items-center space-x-3 cursor-pointer mt-2 bg-slate-50 p-3 rounded-xl border border-slate-200 select-none">
+                <div className={`w-4 h-4 rounded flex items-center justify-center border transition-colors ${deductLunchEdit ? 'bg-indigo-600 border-indigo-600' : 'bg-white border-slate-300'}`}>
+                   {deductLunchEdit && <CheckCircle2 className="w-3 h-3 text-white" />}
                 </div>
                 <input type="checkbox" checked={deductLunchEdit} onChange={(e) => setDeductLunchEdit(e.target.checked)} className="hidden" />
                 <span className="text-sm font-bold text-slate-700">Auto-deduct 1h lunch break</span>
               </label>
             </div>
-            <div className="flex gap-3 mt-8 pb-4 sm:pb-0">
-              <button onClick={() => setEditingEntry(null)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-4 rounded-2xl transition-colors active:scale-95">Cancel</button>
-              <button onClick={saveEdit} disabled={isSavingEdit} className="flex-[2] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-float transition-all active:scale-95">
-                {isSavingEdit ? 'Saving...' : 'Save Changes'}
+
+            {/* Modal Footer */}
+            <div className="p-5 border-t border-slate-100 flex gap-3 flex-shrink-0 pb-safe">
+              <button onClick={() => setEditingEntry(null)} className="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl transition-colors active:scale-95">Cancel</button>
+              <button onClick={saveEdit} disabled={isSavingEdit} className="flex-[2] bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-soft transition-all active:scale-95">
+                {isSavingEdit ? 'Saving...' : 'Save'}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Top Header / Sticky Nav */}
-      <div className="sticky top-0 z-40 bg-[#F8FAFC]/80 backdrop-blur-xl border-b border-slate-200/50 px-4 sm:px-6 lg:px-8 py-4 mb-6 sm:mb-8 transition-all">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex flex-col">
-            <p className="text-indigo-600 font-bold text-[10px] sm:text-xs tracking-widest uppercase mb-0.5">{getGreeting()}</p>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-none truncate max-w-[200px] sm:max-w-md">
-              {profile.full_name || session.user.email.split('@')[0]}
-            </h1>
+      {/* Top Navigation */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-3 min-w-0">
+             <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0">
+                <Briefcase className="w-4 h-4 text-white" />
+             </div>
+             <div className="min-w-0">
+                <h1 className="text-sm sm:text-base font-black text-slate-900 truncate">
+                  {profile.full_name || session.user.email.split('@')[0]}
+                </h1>
+                <p className="text-[10px] sm:text-xs font-bold text-slate-500 uppercase tracking-widest truncate">{profile.company_name || 'No Company'}</p>
+             </div>
           </div>
-          <div className="flex gap-2 sm:gap-3">
-            <button onClick={exportStyledExcel} className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-indigo-600 text-white shadow-[0_4px_15px_rgb(0,0,0,0.1)] hover:shadow-float font-semibold px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-2xl transition-all active:scale-95 text-xs sm:text-sm">
-              <FileSpreadsheet className="w-4 h-4" /> <span className="hidden sm:block">Export DTR</span>
+          <div className="flex items-center gap-2 flex-shrink-0 ml-4">
+            <button onClick={exportStyledExcel} className="flex items-center justify-center gap-1.5 bg-slate-900 hover:bg-indigo-600 text-white shadow-soft font-semibold px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-all active:scale-95 text-xs sm:text-sm">
+              <FileSpreadsheet className="w-4 h-4" /> <span className="hidden sm:inline">Export</span>
             </button>
-            <button onClick={() => supabase.auth.signOut()} className="flex items-center justify-center bg-white text-slate-500 hover:text-rose-600 hover:bg-rose-50 font-bold p-2.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl border border-slate-200 transition-all active:scale-95 shadow-sm">
-              <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
+            <button onClick={() => supabase.auth.signOut()} className="flex items-center justify-center bg-slate-50 text-slate-500 hover:text-rose-600 hover:bg-rose-50 font-bold p-2 sm:px-3 sm:py-2 rounded-lg border border-slate-200 transition-all active:scale-95">
+              <LogOut className="w-4 h-4" />
             </button>
           </div>
         </div>
-      </div>
+      </header>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Profile & Stats Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      {/* Main Content Area - Split Dashboard Layout for Desktop */}
+      <main className="flex-1 w-full max-w-[1400px] mx-auto p-4 sm:p-6 lg:p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
           
-          {/* Left Side: Profile Cards */}
-          <div className="lg:col-span-2 bg-white p-5 sm:p-8 rounded-[2rem] shadow-soft border border-slate-100/50">
-            <h2 className="text-lg font-black text-slate-800 mb-6 flex items-center gap-2"><User className="w-5 h-5 text-indigo-500"/> Student Profile</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-slate-50 p-4 rounded-[1.5rem] border border-slate-200 focus-within:bg-white focus-within:ring-[3px] focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all">
-                <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold flex items-center gap-1.5 mb-1.5"><User className="w-3 h-3"/> Full Name</label>
-                <input type="text" defaultValue={profile.full_name || ''} placeholder="Add your name..." onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-800 text-base sm:text-lg" />
-              </div>
-              <div className="bg-slate-50 p-4 rounded-[1.5rem] border border-slate-200 focus-within:bg-white focus-within:ring-[3px] focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all">
-                <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold flex items-center gap-1.5 mb-1.5"><Briefcase className="w-3 h-3"/> Company</label>
-                <input type="text" defaultValue={profile.company_name} placeholder="Add company name..." onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-800 text-base sm:text-lg" />
-              </div>
-              <div className="bg-slate-50 p-4 rounded-[1.5rem] border border-slate-200 focus-within:bg-white focus-within:ring-[3px] focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all sm:col-span-2">
-                <label className="text-[10px] uppercase tracking-widest text-slate-400 font-bold flex items-center gap-1.5 mb-1.5"><GraduationCap className="w-3 h-3"/> School / University</label>
-                <input type="text" defaultValue={profile.school} onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-800 text-base sm:text-lg" />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side: Stunning Stats Widget */}
-          <div className="bg-slate-900 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] p-6 sm:p-8 rounded-[2rem] shadow-soft text-white flex flex-col justify-between relative overflow-hidden group">
-            {/* Animated Gradient Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/90 via-violet-600/90 to-purple-800/90 opacity-100 z-0"></div>
-            <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/20 rounded-full blur-[80px] z-0 group-hover:bg-white/30 transition-all duration-700"></div>
+          {/* LEFT COLUMN: Profile, Stats, Add Form */}
+          <div className="lg:col-span-5 xl:col-span-4 space-y-6 flex flex-col">
             
-            <div className="relative z-10 h-full flex flex-col justify-between">
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <p className="text-indigo-200/80 font-bold mb-1 text-[11px] tracking-widest uppercase">Hours Rendered</p>
-                  <h3 className="text-5xl sm:text-6xl font-black tracking-tighter text-white drop-shadow-sm">{totalHours.toFixed(1)}<span className="text-2xl sm:text-3xl opacity-60 font-bold">h</span></h3>
+            {/* Stats Overview */}
+            <div className="bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-6 rounded-2xl shadow-float text-white relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-6 opacity-10 pointer-events-none"><Clock className="w-24 h-24"/></div>
+              <div className="relative z-10">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <p className="text-indigo-200 font-bold mb-1 text-[10px] tracking-widest uppercase">Hours Rendered</p>
+                    <h3 className="text-4xl font-black tracking-tighter drop-shadow-sm">{totalHours.toFixed(1)}<span className="text-xl opacity-70">h</span></h3>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-md px-2 py-1.5 rounded-xl border border-white/10 flex flex-col items-center">
+                    <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-10 bg-transparent outline-none font-black text-center text-white text-sm" />
+                    <span className="text-[8px] font-black text-indigo-200 uppercase tracking-widest mt-0.5">Goal</span>
+                  </div>
                 </div>
-                <div className="bg-white/10 backdrop-blur-md p-2.5 rounded-2xl border border-white/10 flex flex-col items-center shadow-inner">
-                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-12 bg-transparent outline-none font-black text-center text-white text-lg" />
-                  <span className="text-[9px] font-black text-indigo-200/80 uppercase tracking-widest mt-0.5">Goal</span>
+                
+                <div className="space-y-2 mb-5">
+                  <div className="flex justify-between text-[11px] font-bold text-indigo-100">
+                    <span>{progressPercentage >= 100 ? 'Goal Reached! 🎉' : `${remainingHours.toFixed(1)}h left`}</span>
+                    <span>{progressPercentage.toFixed(1)}%</span>
+                  </div>
+                  <div className="w-full bg-black/20 rounded-full h-2.5 overflow-hidden">
+                    <div className="bg-emerald-400 h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="space-y-3 mb-6">
-                <div className="flex justify-between text-xs font-bold text-indigo-100">
-                  <span>{progressPercentage >= 100 ? 'Goal Reached! 🎉' : `${remainingHours.toFixed(1)}h remaining`}</span>
-                  <span>{progressPercentage.toFixed(1)}%</span>
-                </div>
-                <div className="w-full bg-black/30 rounded-full h-3 overflow-hidden p-0.5 shadow-inner">
-                  <div className="bg-gradient-to-r from-emerald-400 to-cyan-400 h-full rounded-full transition-all duration-1000 relative shadow-[0_0_15px_rgba(52,211,153,0.4)]" style={{ width: `${progressPercentage}%` }}></div>
-                </div>
-              </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-auto">
-                <div className="bg-white/10 rounded-2xl p-3.5 backdrop-blur-md border border-white/5">
-                  <p className="text-indigo-200/80 text-[10px] font-bold mb-1 uppercase tracking-widest">Days Present</p>
-                  <p className="font-black text-xl flex items-center gap-2"><CalendarDays className="w-4 h-4 text-indigo-300"/> {dtr.length}</p>
-                </div>
-                <div className="bg-white/10 rounded-2xl p-3.5 backdrop-blur-md border border-white/5">
-                  <p className="text-indigo-200/80 text-[10px] font-bold mb-1 uppercase tracking-widest">Avg / Day</p>
-                  <p className="font-black text-xl flex items-center gap-2"><Clock className="w-4 h-4 text-indigo-300"/> {dtr.length > 0 ? (totalHours / dtr.length).toFixed(1) : 0}<span className="text-sm opacity-70">h</span></p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="bg-white/10 rounded-xl p-3">
+                    <p className="text-indigo-200 text-[9px] font-bold mb-0.5 uppercase tracking-widest">Days Present</p>
+                    <p className="font-black text-lg flex items-center gap-1.5"><CalendarDays className="w-3.5 h-3.5 text-indigo-300"/> {dtr.length}</p>
+                  </div>
+                  <div className="bg-white/10 rounded-xl p-3">
+                    <p className="text-indigo-200 text-[9px] font-bold mb-0.5 uppercase tracking-widest">Avg Hours</p>
+                    <p className="font-black text-lg flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-indigo-300"/> {dtr.length > 0 ? (totalHours / dtr.length).toFixed(1) : 0}</p>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Compact Profile Settings */}
+            <div className="bg-white p-5 rounded-2xl shadow-soft border border-slate-100">
+              <h2 className="text-sm font-black text-slate-800 mb-4 flex items-center gap-1.5"><User className="w-4 h-4 text-indigo-500"/> Profile Info</h2>
+              <div className="space-y-3">
+                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all flex items-center gap-2">
+                  <User className="w-4 h-4 text-slate-400 flex-shrink-0 ml-1"/>
+                  <input type="text" defaultValue={profile.full_name || ''} placeholder="Full Name" onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-700 text-sm min-w-0" />
+                </div>
+                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all flex items-center gap-2">
+                  <Briefcase className="w-4 h-4 text-slate-400 flex-shrink-0 ml-1"/>
+                  <input type="text" defaultValue={profile.company_name} placeholder="Company Name" onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-700 text-sm min-w-0" />
+                </div>
+                <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-indigo-500/20 focus-within:border-indigo-300 transition-all flex items-center gap-2">
+                  <GraduationCap className="w-4 h-4 text-slate-400 flex-shrink-0 ml-1"/>
+                  <input type="text" defaultValue={profile.school} placeholder="School / University" onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-700 text-sm min-w-0" />
+                </div>
+              </div>
+            </div>
+
+            {/* DTR Form Component */}
+            <DtrForm userId={session.user.id} onEntryAdded={fetchDTR} />
+            
           </div>
-        </div>
 
-        <DtrForm userId={session.user.id} onEntryAdded={fetchDTR} />
+          {/* RIGHT COLUMN: Timesheet History List / Table */}
+          <div className="lg:col-span-7 xl:col-span-8 flex flex-col min-w-0">
+            
+            {/* Toolbar */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+               <h3 className="text-xl font-black text-slate-800 flex items-center gap-2">
+                 History <span className="bg-slate-200 text-slate-600 text-[10px] px-2 py-0.5 rounded-full">{dtr.length}</span>
+               </h3>
+               <div className="relative w-full sm:w-64">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-400" /></div>
+                  <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} 
+                    className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm font-bold text-slate-700 outline-none transition-all focus:ring-2 focus:ring-indigo-500/20 shadow-sm min-w-0" />
+               </div>
+            </div>
 
-        {/* Timesheet Section */}
-        <div className="mt-8 mb-4">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-             <div className="flex items-center gap-3">
-                <h3 className="text-2xl font-black text-slate-800 tracking-tight">Timesheet History</h3>
-                <span className="bg-slate-200 text-slate-600 text-xs font-bold px-3 py-1 rounded-full">{dtr.length} records</span>
-             </div>
-             
-             <div className="relative w-full sm:w-72">
-                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-400" /></div>
-                <input type="text" placeholder="Search date or remarks..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} 
-                  className="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 outline-none transition-all focus:ring-[3px] focus:ring-indigo-500/20 shadow-sm" />
-             </div>
-          </div>
-
-          {/* Mobile View: High-end Cards */}
-          <div className="block md:hidden space-y-4">
+            {/* Timesheet Display */}
             {filteredDtr.length === 0 ? (
-              <div className="bg-white rounded-[2rem] p-8 text-center border border-slate-100 shadow-sm">
-                 <SearchX className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-                 <p className="text-slate-500 font-bold">No records found.</p>
+              <div className="bg-white rounded-2xl p-10 text-center border border-slate-100 shadow-soft flex-1 flex flex-col items-center justify-center">
+                 <SearchX className="w-10 h-10 text-slate-300 mb-3" />
+                 <p className="text-slate-500 font-bold text-sm">No timesheet records found.</p>
               </div>
             ) : (
-              filteredDtr.map((entry) => (
-                <div key={entry.id} className="bg-white rounded-[2rem] p-5 border border-slate-100 shadow-sm relative overflow-hidden flex flex-col gap-3">
-                   <div className="flex justify-between items-start">
-                      <div>
-                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{formatDateString(entry.date)}</p>
-                         <p className="font-black text-xl text-slate-800 flex items-center gap-2">
-                           {entry.time_in.substring(0, 5)} <span className="text-slate-300 text-sm">→</span> {entry.time_out.substring(0, 5)}
-                         </p>
-                      </div>
-                      <span className="bg-emerald-50 text-emerald-600 font-black px-3 py-1.5 rounded-xl text-sm border border-emerald-100 shadow-sm">{entry.hours_rendered}h</span>
-                   </div>
-                   
-                   <div className="bg-[#F8FAFC] rounded-2xl p-3.5 border border-slate-100/50">
-                      <p className="text-sm font-medium text-slate-600 line-clamp-2">{entry.remarks || <span className="italic text-slate-400">No remarks added</span>}</p>
-                   </div>
-                   
-                   <div className="flex justify-end gap-2 pt-1">
-                      <button onClick={() => handleEditClick(entry)} className="flex-1 flex justify-center items-center gap-1.5 text-xs font-bold text-slate-600 bg-slate-50 border border-slate-200 px-4 py-3 rounded-xl active:scale-95 transition-all"><Edit2 className="w-4 h-4"/> Edit</button>
-                      <button onClick={() => deleteEntry(entry.id)} className="flex items-center justify-center gap-1.5 text-xs font-bold text-rose-600 bg-rose-50 border border-rose-100 px-4 py-3 rounded-xl active:scale-95 transition-all"><Trash2 className="w-4 h-4"/></button>
-                   </div>
+              <div className="space-y-3">
+                {/* Mobile Specific Stacked Cards (Visible <md) */}
+                <div className="md:hidden space-y-3">
+                  {filteredDtr.map((entry) => (
+                    <div key={entry.id} className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm flex flex-col gap-3">
+                       <div className="flex justify-between items-start min-w-0 gap-2">
+                          <div className="min-w-0">
+                             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-0.5">{formatDateString(entry.date)}</p>
+                             <p className="font-black text-lg text-slate-800 flex items-center gap-1.5 flex-wrap">
+                               <span>{entry.time_in.substring(0, 5)}</span>
+                               <span className="text-slate-300 text-xs">→</span>
+                               <span>{entry.time_out.substring(0, 5)}</span>
+                             </p>
+                          </div>
+                          <span className="bg-emerald-50 text-emerald-600 font-black px-2.5 py-1 rounded-lg text-xs border border-emerald-100 flex-shrink-0">{entry.hours_rendered}h</span>
+                       </div>
+                       
+                       <div className="bg-slate-50 rounded-xl p-3 border border-slate-100">
+                          <p className="text-xs font-medium text-slate-600 break-words">{entry.remarks || <span className="italic text-slate-400">No remarks added</span>}</p>
+                       </div>
+                       
+                       <div className="flex justify-end gap-2">
+                          <button onClick={() => handleEditClick(entry)} className="flex-1 flex justify-center items-center gap-1.5 text-xs font-bold text-slate-600 bg-white border border-slate-200 px-3 py-2 rounded-lg active:scale-95"><Edit2 className="w-3.5 h-3.5"/> Edit</button>
+                          <button onClick={() => deleteEntry(entry.id)} className="flex items-center justify-center gap-1.5 text-xs font-bold text-rose-600 bg-white border border-rose-100 px-3 py-2 rounded-lg active:scale-95"><Trash2 className="w-3.5 h-3.5"/></button>
+                       </div>
+                    </div>
+                  ))}
                 </div>
-              ))
+
+                {/* Desktop Specific Table (Visible >=md) */}
+                <div className="hidden md:block bg-white rounded-2xl shadow-soft border border-slate-100 overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-50/80 border-b border-slate-100">
+                          <th className="p-4 px-5 text-[10px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">Date</th>
+                          <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">Time Log</th>
+                          <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 whitespace-nowrap">Hrs</th>
+                          <th className="p-4 text-[10px] font-bold uppercase tracking-widest text-slate-400 w-full">Remarks</th>
+                          <th className="p-4 px-5 text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right whitespace-nowrap">Act</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-50">
+                        {filteredDtr.map((entry) => (
+                          <tr key={entry.id} className="hover:bg-slate-50/50 transition-colors group">
+                            <td className="p-4 px-5 font-bold text-slate-700 text-sm whitespace-nowrap">{formatDateString(entry.date)}</td>
+                            <td className="p-4 whitespace-nowrap">
+                               <div className="flex items-center gap-2 font-black text-slate-800 bg-white border border-slate-200 px-2.5 py-1.5 rounded-lg w-max shadow-sm text-sm">
+                                  <span>{entry.time_in.substring(0, 5)}</span>
+                                  <span className="text-slate-300">→</span>
+                                  <span>{entry.time_out.substring(0, 5)}</span>
+                               </div>
+                            </td>
+                            <td className="p-4 whitespace-nowrap"><span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-black bg-emerald-50 text-emerald-600 border border-emerald-100">{entry.hours_rendered}h</span></td>
+                            <td className="p-4 text-slate-600 font-medium text-sm break-words min-w-[200px]">{entry.remarks || <span className="text-slate-300 italic">No remarks</span>}</td>
+                            <td className="p-4 px-5 text-right whitespace-nowrap">
+                              <div className="flex justify-end gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <button onClick={() => handleEditClick(entry)} className="text-slate-400 hover:text-indigo-600 bg-white hover:bg-indigo-50 p-2 rounded-lg transition-all border border-slate-200 hover:border-indigo-100"><Edit2 className="w-3.5 h-3.5"/></button>
+                                <button onClick={() => deleteEntry(entry.id)} className="text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 p-2 rounded-lg transition-all border border-slate-200 hover:border-rose-100"><Trash2 className="w-3.5 h-3.5"/></button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             )}
           </div>
-
-          {/* Desktop View: Premium Table */}
-          <div className="hidden md:block bg-white rounded-[2rem] shadow-soft border border-slate-100 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse whitespace-nowrap">
-                <thead>
-                  <tr className="bg-slate-50/80 border-b border-slate-100">
-                    <th className="p-5 px-6 text-[10px] font-bold uppercase tracking-widest text-slate-400 w-48">Date</th>
-                    <th className="p-5 text-[10px] font-bold uppercase tracking-widest text-slate-400 w-64">Time Log</th>
-                    <th className="p-5 text-[10px] font-bold uppercase tracking-widest text-slate-400 w-32">Hours</th>
-                    <th className="p-5 text-[10px] font-bold uppercase tracking-widest text-slate-400">Remarks</th>
-                    <th className="p-5 px-6 text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-50">
-                  {filteredDtr.length === 0 ? (
-                    <tr><td colSpan="5" className="p-16 text-center text-slate-400 font-bold"><SearchX className="w-12 h-12 mx-auto mb-3 opacity-30"/> No records found in your timesheet.</td></tr>
-                  ) : (
-                    filteredDtr.map((entry) => (
-                      <tr key={entry.id} className="hover:bg-slate-50/50 transition-colors group">
-                        <td className="p-5 px-6 font-bold text-slate-700">{formatDateString(entry.date)}</td>
-                        <td className="p-5">
-                           <div className="flex items-center gap-2.5 font-black text-slate-800 bg-white border border-slate-200 px-3.5 py-2 rounded-xl w-max shadow-sm">
-                              <span className="text-slate-600">{entry.time_in.substring(0, 5)}</span>
-                              <span className="text-slate-300">→</span>
-                              <span className="text-slate-600">{entry.time_out.substring(0, 5)}</span>
-                           </div>
-                        </td>
-                        <td className="p-5"><span className="inline-flex items-center px-3 py-1.5 rounded-xl text-sm font-black bg-emerald-50 text-emerald-600 border border-emerald-100 shadow-sm">{entry.hours_rendered}h</span></td>
-                        <td className="p-5 text-slate-600 font-medium max-w-sm truncate">{entry.remarks || <span className="text-slate-300 italic">No remarks</span>}</td>
-                        <td className="p-5 px-6 text-right">
-                          <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => handleEditClick(entry)} className="text-slate-400 hover:text-indigo-600 bg-white hover:bg-indigo-50 p-2.5 rounded-xl transition-all border border-slate-200 hover:border-indigo-100 shadow-sm"><Edit2 className="w-4 h-4"/></button>
-                            <button onClick={() => deleteEntry(entry.id)} className="text-slate-400 hover:text-rose-600 bg-white hover:bg-rose-50 p-2.5 rounded-xl transition-all border border-slate-200 hover:border-rose-100 shadow-sm"><Trash2 className="w-4 h-4"/></button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

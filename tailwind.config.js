@@ -3,8 +3,8 @@ export default {
   theme: { 
     extend: {
       boxShadow: {
-        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
-        'float': '0 20px 40px -10px rgba(79,70,229,0.2)',
+        'soft': '0 4px 20px -2px rgba(0,0,0,0.05)',
+        'float': '0 10px 30px -5px rgba(79,70,229,0.15)',
       }
     } 
   },
