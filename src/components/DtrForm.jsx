@@ -39,7 +39,9 @@ export default function DtrForm({ userId, onEntryAdded }) {
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft p-5 sm:p-6 md:p-8 w-full transition-colors mb-8 min-w-0">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4 border-b border-slate-100 dark:border-slate-800 pb-4 min-w-0">
+      
+      {/* Header & Checkbox row with bulletproof flex wrapping for mobile */}
+      <div className="flex flex-col gap-4 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800 min-w-0">
         <div className="flex items-center gap-3 min-w-0">
           <div className="bg-cyan-500/10 p-2.5 rounded-xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 flex-shrink-0 shadow-glow">
             <Terminal className="w-5 h-5" />
@@ -50,12 +52,14 @@ export default function DtrForm({ userId, onEntryAdded }) {
           </div>
         </div>
 
-        <label className={`w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer px-4 py-2.5 rounded-xl border transition-all select-none flex-shrink-0 ${deductLunch ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-700 dark:text-cyan-300' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}>
-          <input type="checkbox" checked={deductLunch} onChange={(e) => setDeductLunch(e.target.checked)} className="hidden" />
-          <UtensilsCrossed className="w-4 h-4 flex-shrink-0"/>
-          <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch</span>
-          <div className={`w-3 h-3 rounded-full ml-1 border flex-shrink-0 ${deductLunch ? 'bg-cyan-500 border-cyan-600 dark:bg-cyan-400 dark:border-cyan-300' : 'bg-transparent border-slate-400'}`}></div>
-        </label>
+        <div className="flex items-center justify-start min-w-0">
+          <label className={`inline-flex items-center gap-2 cursor-pointer px-4 py-2.5 rounded-xl border transition-all select-none ${deductLunch ? 'bg-cyan-500/10 border-cyan-500/30 text-cyan-700 dark:text-cyan-300' : 'bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-500'}`}>
+            <input type="checkbox" checked={deductLunch} onChange={(e) => setDeductLunch(e.target.checked)} className="hidden" />
+            <UtensilsCrossed className="w-4 h-4 flex-shrink-0"/>
+            <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch</span>
+            <div className={`w-3 h-3 rounded-full ml-1 border flex-shrink-0 ${deductLunch ? 'bg-cyan-500 border-cyan-600 dark:bg-cyan-400 dark:border-cyan-300' : 'bg-transparent border-slate-400'}`}></div>
+          </label>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 min-w-0">
@@ -68,7 +72,7 @@ export default function DtrForm({ userId, onEntryAdded }) {
           <div className="w-full min-w-0">
             <div className="flex justify-between items-end mb-2 pr-1 min-w-0">
                <label className="block text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest truncate font-mono">Time In</label>
-               <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded flex items-center gap-1 flex-shrink-0 font-mono"><Clock className="w-3 h-3"/> Now</button>
+               <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded flex items-center gap-1 flex-shrink-0 font-mono"><Clock className="w-3 h-3"/> Now</button>
             </div>
             <input type="time" required value={timeIn} onChange={(e) => setTimeIn(e.target.value)} 
               className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 transition-all min-w-0 font-mono" />
@@ -76,7 +80,7 @@ export default function DtrForm({ userId, onEntryAdded }) {
           <div className="w-full min-w-0">
             <div className="flex justify-between items-end mb-2 pr-1 min-w-0">
                <label className="block text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest truncate font-mono">Time Out</label>
-               <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded flex items-center gap-1 flex-shrink-0 font-mono"><Clock className="w-3 h-3"/> Now</button>
+               <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 px-2.5 py-1 rounded flex items-center gap-1 flex-shrink-0 font-mono"><Clock className="w-3 h-3"/> Now</button>
             </div>
             <input type="time" required value={timeOut} onChange={(e) => setTimeOut(e.target.value)} 
               className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 transition-all min-w-0 font-mono" />
