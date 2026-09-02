@@ -30,7 +30,7 @@ export default function App() {
     <div className="flex items-center justify-center min-h-screen bg-slate-950 text-cyan-400">
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-10 h-10 animate-spin text-cyan-400" />
-        <p className="font-mono text-xs tracking-widest uppercase animate-pulse">Loading Workspace...</p>
+        <p className="font-mono text-xs tracking-widest uppercase animate-pulse">Establishing Secure Uplink...</p>
       </div>
     </div>
   )
@@ -45,7 +45,7 @@ export default function App() {
           title="Toggle Theme"
         >
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          <span>{darkMode ? 'LIGHT' : 'DARK'}</span>
+          <span>{darkMode ? 'LIGHT' : 'CYBER DARK'}</span>
         </button>
       </div>
 
