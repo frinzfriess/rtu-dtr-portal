@@ -18,13 +18,13 @@ export default function App() {
   }, [])
 
   if (loading) return (
-    <div className="flex items-center justify-center min-h-screen bg-cyber-950 text-cyan-400">
+    <div className="flex items-center justify-center min-h-screen bg-dark-950 text-blue-500">
       <div className="flex flex-col items-center gap-4">
-        <Loader2 className="w-10 h-10 animate-spin text-cyan-400" />
-        <p className="font-mono text-xs tracking-widest uppercase animate-pulse">Establishing Secure Uplink...</p>
+        <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
+        <p className="font-medium text-xs tracking-wider text-slate-400 animate-pulse">Loading Workspace...</p>
       </div>
     </div>
   )
 
-  return <div className="min-h-screen w-full bg-cyber-950 font-sans text-slate-100">{!session ? <Auth /> : <Dashboard session={session} />}</div>
+  return <div className="min-h-screen w-full bg-dark-950 font-sans text-slate-100">{!session ? <Auth /> : <Dashboard session={session} />}</div>
 }
