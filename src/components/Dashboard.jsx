@@ -4,11 +4,11 @@ import {
   LogOut, Clock, CalendarDays, Building2, GraduationCap, User, 
   Trash2, Edit, X, Save, FileSpreadsheet, Search, Calculator, 
   Sparkles, CheckCircle2, Terminal, UtensilsCrossed, LayoutDashboard, 
-  FileText, UserCheck, ChevronRight, PlusCircle, Shield, Award
+  FileText, UserCheck, ChevronRight, PlusCircle, Shield, Award, Sun, Moon
 } from 'lucide-react';
 import { calculateHoursRendered, getGreeting, formatDateString, getCurrentTime } from '../utils';
 
-export default function Dashboard({ session, darkMode }) {
+export default function Dashboard({ session, darkMode, setDarkMode }) {
   const [profile, setProfile] = useState(null);
   const [dtr, setDtr] = useState([]);
   const [totalHours, setTotalHours] = useState(0);
@@ -171,44 +171,44 @@ export default function Dashboard({ session, darkMode }) {
   estimatedCompletionDate.setDate(estimatedCompletionDate.getDate() + estimatedCompletionDays);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-950 text-slate-100 font-sans">
+    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-20 md:pb-0">
       
       {/* Edit Modal */}
       {editingEntry && (
         <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative font-mono">
-            <button onClick={() => setEditingEntry(null)} className="absolute top-6 right-6 text-slate-400 hover:text-white bg-slate-800 p-2 rounded-full">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative font-mono">
+            <button onClick={() => setEditingEntry(null)} className="absolute top-6 right-6 text-slate-400 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 p-2 rounded-full">
               <X className="w-5 h-5" />
             </button>
-            <h3 className="text-xl font-black text-white mb-6 flex items-center gap-2"><Edit className="w-5 h-5 text-cyan-400"/> Edit Record</h3>
+            <h3 className="text-xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2"><Edit className="w-5 h-5 text-cyan-500"/> Edit Record</h3>
             
             <div className="space-y-4 text-xs">
               <div>
-                <label className="block font-bold text-cyan-400 uppercase tracking-widest mb-1">Date</label>
-                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-white" />
+                <label className="block font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1">Date</label>
+                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
               </div>
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <label className="block font-bold text-cyan-400 uppercase tracking-widest mb-1">Time In</label>
-                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-white" />
+                  <label className="block font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1">Time In</label>
+                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
                 </div>
                 <div className="flex-1">
-                  <label className="block font-bold text-cyan-400 uppercase tracking-widest mb-1">Time Out</label>
-                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-white" />
+                  <label className="block font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1">Time Out</label>
+                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
                 </div>
               </div>
               <div className="font-sans">
-                <label className="block font-bold text-cyan-400 uppercase tracking-widest mb-1 font-mono">Remarks</label>
-                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-white" />
+                <label className="block font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1 font-mono">Remarks</label>
+                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
               </div>
-              <label className="flex items-center space-x-2 cursor-pointer mt-2 bg-slate-950 p-3 rounded-xl border border-slate-800 select-none">
-                <input type="checkbox" checked={deductLunchEdit} onChange={(e) => setDeductLunchEdit(e.target.checked)} className="w-4 h-4 text-cyan-500 rounded border-slate-700 bg-slate-900" />
-                <span className="font-bold text-slate-300">Auto-deduct 1hr lunch break</span>
+              <label className="flex items-center space-x-2 cursor-pointer mt-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 select-none">
+                <input type="checkbox" checked={deductLunchEdit} onChange={(e) => setDeductLunchEdit(e.target.checked)} className="w-4 h-4 text-cyan-500 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" />
+                <span className="font-bold text-slate-700 dark:text-slate-300">Auto-deduct 1hr lunch break</span>
               </label>
             </div>
 
             <div className="flex gap-3 mt-8 font-mono text-xs">
-              <button onClick={() => setEditingEntry(null)} className="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold py-3 rounded-xl transition-colors">Cancel</button>
+              <button onClick={() => setEditingEntry(null)} className="flex-1 bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-300 font-bold py-3 rounded-xl transition-colors">Cancel</button>
               <button onClick={saveEdit} disabled={isSavingEdit} className="flex-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black py-3 rounded-xl shadow-glow transition-all flex items-center justify-center gap-2">
                 <Save className="w-4 h-4"/> {isSavingEdit ? 'Saving...' : 'Save Changes'}
               </button>
@@ -217,93 +217,98 @@ export default function Dashboard({ session, darkMode }) {
         </div>
       )}
 
-      {/* SIDEBAR NAVIGATION */}
-      <aside className="w-full md:w-72 bg-slate-900 border-r border-slate-800 flex flex-col justify-between p-6 flex-shrink-0">
+      {/* DESKTOP SIDEBAR NAVIGATION (Hidden on mobile) */}
+      <aside className="hidden md:flex w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col justify-between p-6 flex-shrink-0 transition-colors">
         <div>
-          {/* Logo / Brand Header */}
-          <div className="flex items-center gap-3 pb-6 mb-6 border-b border-slate-800">
-            <div className="bg-cyan-500/10 p-3 rounded-2xl border border-cyan-500/30 text-cyan-400 shadow-glow">
+          <div className="flex items-center gap-3 pb-6 mb-6 border-b border-slate-200 dark:border-slate-800">
+            <div className="bg-cyan-500/10 p-3 rounded-2xl border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 shadow-glow">
               <Shield className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[10px] font-mono font-bold text-cyan-400 uppercase tracking-widest block">RTU Portal</span>
-              <h1 className="text-base font-black text-white tracking-wider font-mono">DTR SYSTEM</h1>
+              <span className="text-[10px] font-mono font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block">RTU Portal</span>
+              <h1 className="text-base font-black text-slate-900 dark:text-white tracking-wider font-mono">DTR SYSTEM</h1>
             </div>
           </div>
 
-          {/* Nav Links */}
           <nav className="space-y-2 font-mono text-xs">
-            <button 
-              onClick={() => setActiveTab('overview')} 
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'overview' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-            >
+            <button onClick={() => setActiveTab('overview')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'overview' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}>
               <div className="flex items-center gap-3"><LayoutDashboard className="w-4 h-4"/> Overview</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-70"/>
             </button>
-
-            <button 
-              onClick={() => setActiveTab('log')} 
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'log' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-            >
+            <button onClick={() => setActiveTab('log')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'log' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}>
               <div className="flex items-center gap-3"><PlusCircle className="w-4 h-4"/> Log Hours</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-70"/>
             </button>
-
-            <button 
-              onClick={() => setActiveTab('history')} 
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'history' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-            >
+            <button onClick={() => setActiveTab('history')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'history' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}>
               <div className="flex items-center gap-3"><FileText className="w-4 h-4"/> Timesheet History</div>
-              <span className="bg-slate-800 text-cyan-400 px-2 py-0.5 rounded-md font-bold">{dtr.length}</span>
+              <span className="bg-slate-200 dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 px-2 py-0.5 rounded-md font-bold">{dtr.length}</span>
             </button>
-
-            <button 
-              onClick={() => setActiveTab('estimator')} 
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'estimator' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-            >
+            <button onClick={() => setActiveTab('estimator')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'estimator' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}>
               <div className="flex items-center gap-3"><Calculator className="w-4 h-4"/> Completion Estimator</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-70"/>
             </button>
-
-            <button 
-              onClick={() => setActiveTab('profile')} 
-              className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'profile' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
-            >
+            <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'profile' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'}`}>
               <div className="flex items-center gap-3"><UserCheck className="w-4 h-4"/> Student Profile</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-70"/>
             </button>
           </nav>
         </div>
 
-        {/* Sidebar Footer Profile Snippet & Logout */}
-        <div className="pt-6 border-t border-slate-800 mt-6 space-y-4">
-          <div className="bg-slate-950/60 p-3.5 rounded-2xl border border-slate-800/80">
-            <p className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
-            <p className="text-xs font-bold text-white truncate">{profile.full_name || session.user.email}</p>
+        <div className="pt-6 border-t border-slate-200 dark:border-slate-800 mt-6 space-y-4">
+          <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800">
+            <p className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">Signed in as</p>
+            <p className="text-xs font-bold text-slate-900 dark:text-white truncate">{profile.full_name || session.user.email}</p>
           </div>
 
           <div className="flex gap-2 font-mono">
-            <button onClick={exportStyledExcel} className="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 py-2.5 px-3 rounded-xl text-xs font-bold transition-all" title="Export Excel">
+            <button onClick={exportStyledExcel} className="flex-1 flex items-center justify-center gap-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 py-2.5 px-3 rounded-xl text-xs font-bold transition-all" title="Export Excel">
               <FileSpreadsheet className="w-3.5 h-3.5"/> Export
             </button>
-            <button onClick={() => supabase.auth.signOut()} className="flex items-center justify-center bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 py-2.5 px-3 rounded-xl text-xs font-bold transition-all" title="Sign Out">
+            <button onClick={() => setDarkMode(!darkMode)} className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-cyan-500 hover:text-slate-950 transition-all" title="Toggle Theme">
+              {darkMode ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
+            </button>
+            <button onClick={() => supabase.auth.signOut()} className="flex items-center justify-center bg-rose-500/10 hover:bg-rose-500/20 text-rose-600 dark:text-rose-400 border border-rose-500/30 py-2.5 px-3 rounded-xl text-xs font-bold transition-all" title="Sign Out">
               <LogOut className="w-3.5 h-3.5"/>
             </button>
           </div>
         </div>
       </aside>
 
+      {/* MOBILE BOTTOM NAVIGATION BAR (Visible on mobile only) */}
+      <nav aria-label="Mobile Navigation" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex justify-around items-center">
+        <button onClick={() => setActiveTab('overview')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'overview' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+          <LayoutDashboard className="w-5 h-5"/>
+          <span className="text-[10px] font-mono mt-0.5">Overview</span>
+        </button>
+        <button onClick={() => setActiveTab('log')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'log' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+          <PlusCircle className="w-5 h-5"/>
+          <span className="text-[10px] font-mono mt-0.5">Log</span>
+        </button>
+        <button onClick={() => setActiveTab('history')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'history' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+          <FileText className="w-5 h-5"/>
+          <span className="text-[10px] font-mono mt-0.5">History</span>
+        </button>
+        <button onClick={() => setActiveTab('estimator')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'estimator' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+          <Calculator className="w-5 h-5"/>
+          <span className="text-[10px] font-mono mt-0.5">Estimator</span>
+        </button>
+        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'profile' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+          <UserCheck className="w-5 h-5"/>
+          <span className="text-[10px] font-mono mt-0.5">Profile</span>
+        </button>
+      </nav>
+
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-950">
+      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-100 dark:bg-slate-950 transition-colors">
         
         {/* Top Header Bar */}
-        <header className="bg-slate-900/60 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+        <header className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
           <div>
-            <div className="flex items-center gap-2 text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-widest mb-0.5">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-widest mb-0.5">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
               {getGreeting()}
             </div>
-            <h2 className="text-lg sm:text-xl font-black text-white tracking-tight truncate">
+            <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight truncate">
               {activeTab === 'overview' && 'Dashboard Overview'}
               {activeTab === 'log' && 'Log Daily Hours'}
               {activeTab === 'history' && 'Timesheet History & Logs'}
@@ -313,97 +318,103 @@ export default function Dashboard({ session, darkMode }) {
           </div>
 
           <div className="flex items-center gap-3 font-mono text-xs">
-            <div className="hidden sm:flex items-center gap-2 bg-slate-900 border border-slate-800 px-4 py-2 rounded-xl">
-              <Award className="w-4 h-4 text-cyan-400"/>
-              <span>Goal: <strong className="text-cyan-400">{profile.required_hours}h</strong></span>
+            {/* Mobile theme toggle button */}
+            <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
+              {darkMode ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
+            </button>
+            <div className="hidden sm:flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm">
+              <Award className="w-4 h-4 text-cyan-500"/>
+              <span>Goal: <strong className="text-cyan-600 dark:text-cyan-400">{profile.required_hours}h</strong></span>
             </div>
+            <button onClick={exportStyledExcel} className="hidden sm:flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3.5 py-2 rounded-xl shadow-md">
+              <FileSpreadsheet className="w-4 h-4"/> Export DTR
+            </button>
+            <button onClick={() => supabase.auth.signOut()} className="hidden sm:flex items-center gap-1.5 bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 border border-slate-200 dark:border-slate-800 font-bold px-3.5 py-2 rounded-xl shadow-sm">
+              <LogOut className="w-4 h-4"/>
+            </button>
           </div>
         </header>
 
         {/* Tab Content Container */}
-        <div className="p-6 sm:p-8 max-w-6xl w-full mx-auto space-y-8">
+        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto space-y-8">
 
           {/* OVERVIEW TAB */}
           {activeTab === 'overview' && (
             <div className="space-y-8 animate-fadeIn">
-              
-              {/* Stat Cards Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-soft">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Total Rendered</span>
-                    <div className="bg-cyan-500/10 text-cyan-400 p-2.5 rounded-2xl border border-cyan-500/20"><Clock className="w-5 h-5"/></div>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Total Rendered</span>
+                    <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-2.5 rounded-2xl border border-cyan-500/20"><Clock className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-white mb-2">{totalHours.toFixed(2)}<span className="text-base text-cyan-400">h</span></h3>
-                  <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                  <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-2">{totalHours.toFixed(2)}<span className="text-base text-cyan-500">h</span></h3>
+                  <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800">
                     <div className="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-soft">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Days Present</span>
-                    <div className="bg-indigo-500/10 text-indigo-400 p-2.5 rounded-2xl border border-indigo-500/20"><CalendarDays className="w-5 h-5"/></div>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Days Present</span>
+                    <div className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-2xl border border-indigo-500/20"><CalendarDays className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-white mb-1">{dtr.length}</h3>
-                  <p className="text-xs text-slate-400 font-mono">Recorded shifts</p>
+                  <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{dtr.length}</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Recorded shifts</p>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl shadow-soft">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
                   <div className="flex justify-between items-start mb-4">
-                    <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-widest">Hours Remaining</span>
-                    <div className="bg-emerald-500/10 text-emerald-400 p-2.5 rounded-2xl border border-emerald-500/20"><Award className="w-5 h-5"/></div>
+                    <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Hours Remaining</span>
+                    <div className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 p-2.5 rounded-2xl border border-emerald-500/20"><Award className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-base">h</span></h3>
-                  <p className="text-xs text-slate-400 font-mono">{progressPercentage.toFixed(1)}% completed</p>
+                  <h3 className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-base">h</span></h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{progressPercentage.toFixed(1)}% completed</p>
                 </div>
               </div>
 
-              {/* Quick Action Banner & Recent History Preview */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-gradient-to-r from-cyan-900/20 via-indigo-900/20 to-slate-900 border border-cyan-500/30 p-6 sm:p-8 rounded-3xl flex flex-col justify-between">
+                <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white border border-cyan-500/30 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between">
                   <div>
-                    <span className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-widest block mb-2">Ready to work?</span>
+                    <span className="text-xs font-mono font-bold text-cyan-200 uppercase tracking-widest block mb-2">Ready to work?</span>
                     <h3 className="text-2xl font-black text-white mb-3">Log your OJT hours instantly</h3>
-                    <p className="text-sm text-slate-300 mb-6 font-sans">Keep your timesheet up to date and generate official RTU DTR spreadsheet exports instantly.</p>
+                    <p className="text-sm text-cyan-100 mb-6 font-sans">Keep your timesheet up to date and generate official RTU DTR spreadsheet exports instantly.</p>
                   </div>
                   <div className="flex flex-wrap gap-3 font-mono">
-                    <button onClick={() => setActiveTab('log')} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-6 py-3.5 rounded-2xl shadow-glow transition-all text-xs flex items-center gap-2">
+                    <button onClick={() => setActiveTab('log')} className="bg-white text-slate-950 font-black px-6 py-3.5 rounded-2xl shadow-lg transition-all text-xs flex items-center gap-2 hover:bg-cyan-50">
                       <PlusCircle className="w-4 h-4"/> Log New Hours Now
                     </button>
-                    <button onClick={() => setActiveTab('history')} className="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3.5 rounded-2xl transition-all text-xs">
+                    <button onClick={() => setActiveTab('history')} className="bg-black/20 hover:bg-black/30 text-white font-bold px-6 py-3.5 rounded-2xl transition-all text-xs border border-white/20">
                       View All Records
                     </button>
                   </div>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-3xl flex flex-col justify-between">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl flex flex-col justify-between shadow-soft transition-colors">
                   <div>
-                    <h3 className="text-sm font-black font-mono text-white mb-4 uppercase tracking-wider flex items-center gap-2"><User className="w-4 h-4 text-cyan-400"/> Quick Profile</h3>
+                    <h3 className="text-sm font-black font-mono text-slate-900 dark:text-white mb-4 uppercase tracking-wider flex items-center gap-2"><User className="w-4 h-4 text-cyan-500"/> Quick Profile</h3>
                     <div className="space-y-3 text-xs font-mono">
-                      <div><span className="text-slate-500 block text-[10px] uppercase">Name</span> <span className="font-bold text-white">{profile.full_name || 'Not Set'}</span></div>
-                      <div><span className="text-slate-500 block text-[10px] uppercase">Company</span> <span className="font-bold text-white">{profile.company_name}</span></div>
-                      <div><span className="text-slate-500 block text-[10px] uppercase">School</span> <span className="font-bold text-white">{profile.school}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Name</span> <span className="font-bold text-slate-900 dark:text-white">{profile.full_name || 'Not Set'}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Company</span> <span className="font-bold text-slate-900 dark:text-white">{profile.company_name}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">School</span> <span className="font-bold text-slate-900 dark:text-white">{profile.school}</span></div>
                     </div>
                   </div>
-                  <button onClick={() => setActiveTab('profile')} className="mt-6 text-xs font-mono font-bold text-cyan-400 hover:underline flex items-center gap-1">Edit Profile details &rarr;</button>
+                  <button onClick={() => setActiveTab('profile')} className="mt-6 text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1">Edit Profile details &rarr;</button>
                 </div>
               </div>
-
             </div>
           )}
 
           {/* LOG HOURS TAB */}
           {activeTab === 'log' && (
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn transition-colors">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-400 border border-cyan-500/30 shadow-glow">
+                  <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shadow-glow">
                     <Terminal className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-white uppercase tracking-wider font-mono">Log Daily Hours</h3>
-                    <p className="text-xs text-slate-400 font-mono">Record your daily OJT time-in, time-out, and tasks.</p>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono">Log Daily Hours</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Record your daily OJT time-in, time-out, and tasks.</p>
                   </div>
                 </div>
 
@@ -411,13 +422,13 @@ export default function Dashboard({ session, darkMode }) {
                   type="button"
                   onClick={() => setDeductLunch(!deductLunch)}
                   className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border transition-all select-none self-start sm:self-auto ${
-                    deductLunch ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-300' : 'bg-slate-950 border-slate-800 text-slate-500'
+                    deductLunch ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-700 dark:text-cyan-300' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-500'
                   }`}
                 >
                   <UtensilsCrossed className="w-4 h-4 flex-shrink-0" />
                   <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch</span>
                   <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                    deductLunch ? 'bg-cyan-500 border-cyan-600 text-slate-950' : 'bg-transparent border-slate-600'
+                    deductLunch ? 'bg-cyan-500 border-cyan-600 text-slate-950' : 'bg-transparent border-slate-400'
                   }`}>
                     {deductLunch && <div className="w-1.5 h-1.5 rounded-full bg-slate-950"></div>}
                   </div>
@@ -427,42 +438,42 @@ export default function Dashboard({ session, darkMode }) {
               <form onSubmit={handleLogSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   <div>
-                    <label className="block text-[11px] font-bold text-cyan-400 uppercase tracking-widest mb-2 font-mono">Date</label>
+                    <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Date</label>
                     <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500 font-mono" />
+                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                       <label className="text-[11px] font-bold text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
-                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
+                       <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
+                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
                          <Clock className="w-3 h-3 inline mr-1"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeIn} onChange={(e) => setTimeIn(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500 font-mono" />
+                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
                   </div>
                   <div>
                     <div className="flex justify-between items-center mb-2">
-                       <label className="text-[11px] font-bold text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
-                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
+                       <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
+                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
                          <Clock className="w-3 h-3 inline mr-1"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeOut} onChange={(e) => setTimeOut(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500 font-mono" />
+                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-bold text-cyan-400 uppercase tracking-widest mb-2 font-mono">Remarks / Tasks</label>
+                  <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Remarks / Tasks</label>
                   <input type="text" placeholder="E.g., System debugging, UI development..." value={remarks} onChange={(e) => setRemarks(e.target.value)} 
-                    className="w-full px-4 py-3.5 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500 font-sans" />
+                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-sans" />
                 </div>
 
                 <div className="flex justify-end pt-2">
                   <button type="submit" disabled={submitting} 
                     className={`w-full sm:w-auto font-bold px-8 py-4 rounded-2xl transition-all active:scale-95 shadow-glow font-mono text-xs tracking-wide flex items-center justify-center gap-2 ${
-                      successStatus ? 'bg-emerald-500 text-slate-950' : 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-slate-950 font-black'
+                      successStatus ? 'bg-emerald-500 text-white' : 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-slate-950 font-black'
                     }`}>
                     {successStatus ? <><CheckCircle2 className="w-4 h-4"/> Record Logged Successfully!</> : 'Submit Daily Record'}
                   </button>
@@ -473,18 +484,18 @@ export default function Dashboard({ session, darkMode }) {
 
           {/* HISTORY TAB */}
           {activeTab === 'history' && (
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl shadow-soft overflow-hidden animate-fadeIn">
-              <div className="px-6 py-5 border-b border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-950/50">
-                <h3 className="font-black text-white flex items-center gap-2 text-base font-mono uppercase tracking-wider"><Clock className="w-5 h-5 text-cyan-400"/> Timesheet History</h3>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden animate-fadeIn transition-colors">
+              <div className="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 dark:bg-slate-950/50">
+                <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-base font-mono uppercase tracking-wider"><Clock className="w-5 h-5 text-cyan-500"/> Timesheet History</h3>
                 <div className="relative w-full sm:w-72">
-                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-500" /></div>
-                   <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs font-bold text-white outline-none focus:border-cyan-500 font-mono" />
+                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-400" /></div>
+                   <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
                 </div>
               </div>
               <div className="overflow-x-auto w-full">
                 <table className="w-full text-left border-collapse whitespace-nowrap text-xs">
                   <thead>
-                    <tr className="bg-slate-950 border-b border-slate-800 text-[10px] text-cyan-400 uppercase tracking-widest font-mono">
+                    <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-[10px] text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">
                       <th className="p-4 px-6">Date</th>
                       <th className="p-4 px-6">Time In</th>
                       <th className="p-4 px-6">Time Out</th>
@@ -493,21 +504,21 @@ export default function Dashboard({ session, darkMode }) {
                       <th className="p-4 px-6 text-right font-mono">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/60">
+                  <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
                     {filteredDtr.length === 0 ? (
-                      <tr><td colSpan="6" className="p-12 text-center text-slate-500 font-mono">No timesheet records found.</td></tr>
+                      <tr><td colSpan="6" className="p-12 text-center text-slate-400 font-mono">No timesheet records found.</td></tr>
                     ) : (
                       filteredDtr.map((entry) => (
-                        <tr key={entry.id} className="hover:bg-slate-950/40 transition-colors group">
-                          <td className="p-4 px-6 font-bold text-slate-300 font-mono">{formatDateString(entry.date)}</td>
-                          <td className="p-4 px-6 text-slate-400 font-mono">{entry.time_in.substring(0, 5)}</td>
-                          <td className="p-4 px-6 text-slate-400 font-mono">{entry.time_out.substring(0, 5)}</td>
-                          <td className="p-4 px-6 font-mono"><span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">{entry.hours_rendered}h</span></td>
-                          <td className="p-4 px-6 text-slate-300 max-w-[250px] truncate">{entry.remarks || '-'}</td>
+                        <tr key={entry.id} className="hover:bg-slate-50 dark:hover:bg-slate-950/40 transition-colors group">
+                          <td className="p-4 px-6 font-bold text-slate-700 dark:text-slate-300 font-mono">{formatDateString(entry.date)}</td>
+                          <td className="p-4 px-6 text-slate-500 dark:text-slate-400 font-mono">{entry.time_in.substring(0, 5)}</td>
+                          <td className="p-4 px-6 text-slate-500 dark:text-slate-400 font-mono">{entry.time_out.substring(0, 5)}</td>
+                          <td className="p-4 px-6 font-mono"><span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-bold bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20">{entry.hours_rendered}h</span></td>
+                          <td className="p-4 px-6 text-slate-600 dark:text-slate-300 max-w-[250px] truncate">{entry.remarks || '-'}</td>
                           <td className="p-4 px-6 text-right font-mono">
                             <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button onClick={() => handleEditClick(entry)} className="text-cyan-400 hover:text-cyan-300 bg-slate-950 hover:bg-slate-800 p-2 rounded-lg border border-slate-800"><Edit className="w-4 h-4"/></button>
-                              <button onClick={() => deleteEntry(entry.id)} className="text-rose-400 hover:text-rose-300 bg-slate-950 hover:bg-slate-800 p-2 rounded-lg border border-slate-800"><Trash2 className="w-4 h-4"/></button>
+                              <button onClick={() => handleEditClick(entry)} className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 bg-slate-100 dark:bg-slate-950 hover:bg-slate-200 dark:hover:bg-slate-800 p-2 rounded-lg border border-slate-200 dark:border-slate-800"><Edit className="w-4 h-4"/></button>
+                              <button onClick={() => deleteEntry(entry.id)} className="text-rose-600 dark:text-rose-400 hover:text-rose-700 bg-slate-100 dark:bg-slate-950 hover:bg-rose-50 dark:hover:bg-rose-500/10 p-2 rounded-lg border border-slate-200 dark:border-slate-800"><Trash2 className="w-4 h-4"/></button>
                             </div>
                           </td>
                         </tr>
@@ -521,35 +532,35 @@ export default function Dashboard({ session, darkMode }) {
 
           {/* ESTIMATOR TAB */}
           {activeTab === 'estimator' && (
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl">
-              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
-                <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-400 border border-cyan-500/30">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors">
+              <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+                <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
                   <Calculator className="w-6 h-6"/>
                 </div>
                 <div>
-                  <h3 className="text-lg font-black text-white uppercase tracking-wider font-mono">OJT Completion Estimator</h3>
-                  <p className="text-xs text-slate-400 font-mono">Calculate your projected finish date based on your work pace.</p>
+                  <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono">OJT Completion Estimator</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Calculate your projected finish date based on your work pace.</p>
                 </div>
               </div>
 
               <div className="space-y-6 font-mono">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs uppercase font-bold text-slate-400 mb-2">Target Days Per Week</label>
-                    <input type="number" min="1" max="7" value={targetDaysPerWeek} onChange={(e) => setTargetDaysPerWeek(Number(e.target.value))} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500" />
+                    <label className="block text-xs uppercase font-bold text-slate-500 dark:text-slate-400 mb-2">Target Days Per Week</label>
+                    <input type="number" min="1" max="7" value={targetDaysPerWeek} onChange={(e) => setTargetDaysPerWeek(Number(e.target.value))} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500" />
                   </div>
                   <div>
-                    <label className="block text-xs uppercase font-bold text-slate-400 mb-2">Target Hours Per Day</label>
-                    <input type="number" min="1" max="12" value={targetHoursPerDay} onChange={(e) => setTargetHoursPerDay(Number(e.target.value))} className="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-sm font-bold text-white outline-none focus:border-cyan-500" />
+                    <label className="block text-xs uppercase font-bold text-slate-500 dark:text-slate-400 mb-2">Target Hours Per Day</label>
+                    <input type="number" min="1" max="12" value={targetHoursPerDay} onChange={(e) => setTargetHoursPerDay(Number(e.target.value))} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500" />
                   </div>
                 </div>
 
-                <div className="bg-slate-950 p-6 rounded-2xl border border-cyan-500/30 text-center space-y-2">
-                  <p className="text-xs uppercase font-bold text-slate-400">Projected Completion Date:</p>
-                  <p className="text-3xl font-black text-cyan-400">
+                <div className="bg-slate-50 dark:bg-slate-950 p-6 rounded-2xl border border-cyan-500/30 text-center space-y-2">
+                  <p className="text-xs uppercase font-bold text-slate-500 dark:text-slate-400">Projected Completion Date:</p>
+                  <p className="text-3xl font-black text-cyan-600 dark:text-cyan-400">
                     {remainingHours <= 0 ? 'Goal Completed! 🎉' : estimatedCompletionDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
                   </p>
-                  <p className="text-xs text-slate-400 pt-2">Remaining Required Hours: <strong className="text-white">{remainingHours.toFixed(2)} hrs</strong></p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 pt-2">Remaining Required Hours: <strong className="text-slate-900 dark:text-white">{remainingHours.toFixed(2)} hrs</strong></p>
                 </div>
               </div>
             </div>
@@ -557,24 +568,24 @@ export default function Dashboard({ session, darkMode }) {
 
           {/* PROFILE TAB */}
           {activeTab === 'profile' && (
-            <div className="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl">
-              <h3 className="text-lg font-black text-white mb-6 flex items-center gap-2 font-mono"><User className="w-5 h-5 text-cyan-400"/> Student Profile Settings</h3>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors">
+              <h3 className="text-lg font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2 font-mono"><User className="w-5 h-5 text-cyan-500"/> Student Profile Settings</h3>
               <div className="space-y-5 font-mono">
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <label className="text-[10px] uppercase text-slate-400 font-bold block mb-1">Full Name</label>
-                  <input type="text" defaultValue={profile.full_name || ''} placeholder="Juan Dela Cruz" onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-white text-sm" />
+                <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">Full Name</label>
+                  <input type="text" defaultValue={profile.full_name || ''} placeholder="Juan Dela Cruz" onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white text-sm" />
                 </div>
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <label className="text-[10px] uppercase text-slate-400 font-bold block mb-1">Company / Internship Site</label>
-                  <input type="text" defaultValue={profile.company_name} onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-white text-sm" />
+                <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">Company / Internship Site</label>
+                  <input type="text" defaultValue={profile.company_name} onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white text-sm" />
                 </div>
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <label className="text-[10px] uppercase text-slate-400 font-bold block mb-1">School / University</label>
-                  <input type="text" defaultValue={profile.school} onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-white text-sm" />
+                <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">School / University</label>
+                  <input type="text" defaultValue={profile.school} onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white text-sm" />
                 </div>
-                <div className="bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                  <label className="text-[10px] uppercase text-slate-400 font-bold block mb-1">Required OJT Hours Goal</label>
-                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-400 text-sm" />
+                <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">Required OJT Hours Goal</label>
+                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-600 dark:text-cyan-400 text-sm" />
                 </div>
               </div>
             </div>

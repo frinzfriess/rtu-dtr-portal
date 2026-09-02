@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
-import { Loader2, Sun, Moon } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -36,19 +36,8 @@ export default function App() {
   )
 
   return (
-    <div className={`min-h-screen w-full transition-colors duration-300 font-sans ${darkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
-      <div className="fixed bottom-5 right-5 z-50">
-        <button 
-          onClick={() => setDarkMode(!darkMode)}
-          className="flex items-center gap-2 px-4 py-3 rounded-full shadow-2xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black font-mono text-xs transition-all active:scale-95 border border-cyan-300 shadow-glow"
-          title="Toggle Theme"
-        >
-          {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          <span>{darkMode ? 'LIGHT' : 'DARK'}</span>
-        </button>
-      </div>
-
-      {!session ? <Auth /> : <Dashboard session={session} darkMode={darkMode} />}
+    <div className={`min-h-screen w-full transition-colors duration-300 font-sans ${darkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-100 text-slate-900'}`}>
+      {!session ? <Auth /> : <Dashboard session={session} darkMode={darkMode} setDarkMode={setDarkMode} />}
     </div>
   )
 }

@@ -28,10 +28,9 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4 sm:p-8 bg-slate-50 dark:bg-slate-950 relative overflow-hidden transition-colors font-mono">
+    <div className="flex justify-center items-center min-h-screen p-4 sm:p-8 bg-slate-100 dark:bg-slate-950 relative overflow-hidden transition-colors font-mono">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415510_1px,transparent_1px),linear-gradient(to_bottom,#33415510_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none"></div>
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
-
+      
       <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8 relative z-10 transition-colors">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
            <div className="flex items-center gap-2.5">
