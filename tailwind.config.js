@@ -7,10 +7,6 @@ export default {
           950: '#030712',
           900: '#0f172a',
           800: '#1e293b',
-          700: '#334155',
-          accent: '#06b6d4', // Cyan
-          neon: '#10b981',   // Emerald
-          shield: '#6366f1'  // Indigo
         }
       },
       boxShadow: {

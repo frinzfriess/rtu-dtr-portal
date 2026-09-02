@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
-import { ShieldAlert, Loader2 } from 'lucide-react'
+import { Loader2 } from 'lucide-react'
 
 export default function App() {
   const [session, setSession] = useState(null)
