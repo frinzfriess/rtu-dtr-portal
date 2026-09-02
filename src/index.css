@@ -4,4 +4,25 @@
 
 html, body { -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
 * { box-sizing: border-box; min-width: 0; }
-input[type="time"], input[type="date"] { min-height: 44px; width: 100%; max-width: 100%; box-sizing: border-box; }
+
+/* Strip native iOS styling from inputs */
+input[type="time"]::-webkit-inner-spin-button,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+input[type="time"], input[type="date"] {
+    position: relative;
+    background-color: transparent !important;
+}

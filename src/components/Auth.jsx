@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../supabaseClient'
-import { ShieldCheck, Lock, Mail, UserPlus, ArrowRight, Loader2, Cpu } from 'lucide-react'
+import { ShieldCheck, Lock, Mail, UserPlus, ArrowRight, Loader2 } from 'lucide-react'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)

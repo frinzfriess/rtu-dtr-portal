@@ -21,3 +21,8 @@ export function getGreeting() {
 export function formatDateString(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 }
+
+export function getInitials(name) {
+  if (!name) return 'S';
+  return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+}
