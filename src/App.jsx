@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from './supabaseClient'
 import Auth from './components/Auth'
 import Dashboard from './components/Dashboard'
-import { Shield, Loader2, Sun, Moon } from 'lucide-react'
+import { Loader2, Sun, Moon } from 'lucide-react'
 
 export default function App() {
   const [session, setSession] = useState(null)
@@ -30,7 +30,7 @@ export default function App() {
     <div className="flex items-center justify-center min-h-screen bg-slate-950 text-cyan-400">
       <div className="flex flex-col items-center gap-4">
         <Loader2 className="w-10 h-10 animate-spin text-cyan-400" />
-        <p className="font-mono text-xs tracking-widest uppercase animate-pulse">Establishing Secure Uplink...</p>
+        <p className="font-mono text-xs tracking-widest uppercase animate-pulse">Loading Workspace...</p>
       </div>
     </div>
   )
@@ -45,7 +45,7 @@ export default function App() {
           title="Toggle Theme"
         >
           {darkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-          <span>{darkMode ? 'LIGHT OP' : 'CYBER DARK'}</span>
+          <span>{darkMode ? 'LIGHT' : 'DARK'}</span>
         </button>
       </div>
 
