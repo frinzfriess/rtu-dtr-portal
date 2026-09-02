@@ -17,3 +17,7 @@ export function getGreeting() {
   if (hour < 18) return 'Good Afternoon';
   return 'Good Evening';
 }
+
+export function formatDateString(dateStr) {
+  return new Date(dateStr).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
