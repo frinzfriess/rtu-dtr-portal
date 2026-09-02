@@ -122,39 +122,39 @@ export default function Dashboard({ session, darkMode }) {
   const filteredDtr = dtr.filter(e => e.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) || e.date.includes(searchTerm));
 
   return (
-    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300">
+    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300 min-w-0">
       
       {/* Edit Modal */}
       {editingEntry && (
         <div className="fixed inset-0 bg-slate-950/70 backdrop-blur-md flex items-center justify-center p-4 z-50">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 w-full max-w-md shadow-2xl relative">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl relative min-w-0">
             <button onClick={() => setEditingEntry(null)} className="absolute top-6 right-6 text-slate-400 hover:text-slate-600 dark:hover:text-white transition-colors bg-slate-100 dark:bg-slate-800 p-2 rounded-full">
               <X className="w-5 h-5" />
             </button>
             <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2"><Edit className="w-5 h-5 text-cyan-500"/> Edit Record</h3>
             
-            <div className="space-y-4 text-sm">
-              <div>
+            <div className="space-y-4 text-sm min-w-0">
+              <div className="min-w-0">
                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Date</label>
-                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
+                <input type="date" value={editForm.date} onChange={e => setEditForm({...editForm, date: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white min-w-0" />
               </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Time In</label>
-                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
+              <div className="flex flex-col sm:flex-row gap-4 min-w-0">
+                <div className="flex-1 min-w-0">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 truncate">Time In</label>
+                  <input type="time" value={editForm.time_in} onChange={e => setEditForm({...editForm, time_in: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white min-w-0" />
                 </div>
-                <div className="flex-1">
-                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Time Out</label>
-                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
+                <div className="flex-1 min-w-0">
+                  <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 truncate">Time Out</label>
+                  <input type="time" value={editForm.time_out} onChange={e => setEditForm({...editForm, time_out: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white min-w-0" />
                 </div>
               </div>
-              <div>
+              <div className="min-w-0">
                 <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Remarks</label>
-                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white" />
+                <input type="text" value={editForm.remarks} onChange={e => setEditForm({...editForm, remarks: e.target.value})} className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 outline-none font-bold text-slate-900 dark:text-white min-w-0" />
               </div>
-              <label className="flex items-center space-x-2 cursor-pointer mt-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
-                <input type="checkbox" checked={deductLunchEdit} onChange={(e) => setDeductLunchEdit(e.target.checked)} className="w-4 h-4 text-cyan-500 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900" />
-                <span className="font-bold text-slate-700 dark:text-slate-300">Auto-deduct 1hr lunch break</span>
+              <label className="flex items-center space-x-2 cursor-pointer mt-2 bg-slate-50 dark:bg-slate-950 p-3 rounded-xl border border-slate-200 dark:border-slate-800 min-w-0">
+                <input type="checkbox" checked={deductLunchEdit} onChange={(e) => setDeductLunchEdit(e.target.checked)} className="w-4 h-4 text-cyan-500 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 flex-shrink-0" />
+                <span className="font-bold text-slate-700 dark:text-slate-300 text-xs sm:text-sm">Auto-deduct 1hr lunch break</span>
               </label>
             </div>
 
@@ -169,53 +169,53 @@ export default function Dashboard({ session, darkMode }) {
       )}
 
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-200 dark:border-slate-800 pb-6 transition-colors">
-        <div>
-          <p className="text-cyan-600 dark:text-cyan-400 font-bold text-xs tracking-wider uppercase mb-1">{getGreeting()}</p>
-          <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">{profile.full_name || session.user.email.split('@')[0]}</h1>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-200 dark:border-slate-800 pb-6 transition-colors min-w-0">
+        <div className="min-w-0">
+          <p className="text-cyan-600 dark:text-cyan-400 font-bold text-xs tracking-wider uppercase mb-1 truncate">{getGreeting()}</p>
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight truncate max-w-full">{profile.full_name || session.user.email.split('@')[0]}</h1>
         </div>
-        <div className="flex gap-3 w-full md:w-auto text-sm">
-          <button onClick={exportStyledExcel} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 font-bold px-5 py-3 rounded-xl transition-all">
-            <FileSpreadsheet className="w-4 h-4" /> Export DTR
+        <div className="flex gap-3 w-full md:w-auto text-sm flex-shrink-0">
+          <button onClick={exportStyledExcel} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/20 font-bold px-4 sm:px-5 py-3 rounded-xl transition-all">
+            <FileSpreadsheet className="w-4 h-4 flex-shrink-0" /> <span>Export DTR</span>
           </button>
-          <button onClick={() => supabase.auth.signOut()} className="flex-none flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 font-bold px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 transition-all">
-            <LogOut className="w-4 h-4" /> Sign Out
+          <button onClick={() => supabase.auth.signOut()} className="flex-none flex items-center justify-center gap-2 bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 font-bold px-4 sm:px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-800 transition-all">
+            <LogOut className="w-4 h-4 flex-shrink-0" /> <span className="hidden sm:inline">Sign Out</span>
           </button>
         </div>
       </div>
       
       {/* Profile & Stats */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 min-w-0">
         
-        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 sm:p-8 rounded-3xl shadow-soft transition-colors">
+        <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 md:p-8 rounded-3xl shadow-soft transition-colors min-w-0">
           <h2 className="text-lg font-black text-slate-900 dark:text-white mb-5 flex items-center gap-2"><User className="w-5 h-5 text-cyan-500"/> Student Profile</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all">
-              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1"><User className="w-3 h-3 text-cyan-500"/> Full Name</label>
-              <input type="text" defaultValue={profile.full_name || ''} placeholder="Juan Dela Cruz" onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 min-w-0">
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all min-w-0">
+              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1 truncate"><User className="w-3 h-3 text-cyan-500 flex-shrink-0"/> Full Name</label>
+              <input type="text" defaultValue={profile.full_name || ''} placeholder="Juan Dela Cruz" onBlur={(e) => updateProfileInfo('full_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white min-w-0 text-sm sm:text-base truncate" />
             </div>
-            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all">
-              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1"><Building2 className="w-3 h-3 text-cyan-500"/> Company</label>
-              <input type="text" defaultValue={profile.company_name} placeholder="Tech Corp Inc." onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white" />
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all min-w-0">
+              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1 truncate"><Building2 className="w-3 h-3 text-cyan-500 flex-shrink-0"/> Company</label>
+              <input type="text" defaultValue={profile.company_name} placeholder="Tech Corp Inc." onBlur={(e) => updateProfileInfo('company_name', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white min-w-0 text-sm sm:text-base truncate" />
             </div>
-            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all sm:col-span-2">
-              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1"><GraduationCap className="w-3 h-3 text-cyan-500"/> School / University</label>
-              <input type="text" defaultValue={profile.school} onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white" />
+            <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 transition-all sm:col-span-2 min-w-0">
+              <label className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1.5 mb-1 truncate"><GraduationCap className="w-3 h-3 text-cyan-500 flex-shrink-0"/> School / University</label>
+              <input type="text" defaultValue={profile.school} onBlur={(e) => updateProfileInfo('school', e.target.value)} className="w-full bg-transparent outline-none font-bold text-slate-900 dark:text-white min-w-0 text-sm sm:text-base truncate" />
             </div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-700 p-6 sm:p-8 rounded-3xl shadow-xl text-white flex flex-col justify-between relative overflow-hidden">
+        <div className="bg-gradient-to-br from-cyan-600 via-indigo-600 to-purple-700 p-5 sm:p-6 md:p-8 rounded-3xl shadow-xl text-white flex flex-col justify-between relative overflow-hidden min-w-0">
           <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none"><Clock className="w-32 h-32"/></div>
-          <div className="relative z-10">
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <p className="text-cyan-100 font-bold mb-1 text-xs uppercase tracking-wider">Total Rendered</p>
-                <h3 className="text-4xl font-black tracking-tight">{totalHours.toFixed(2)}<span className="text-xl">h</span></h3>
+          <div className="relative z-10 min-w-0">
+            <div className="flex justify-between items-start mb-6 min-w-0 gap-2">
+              <div className="min-w-0">
+                <p className="text-cyan-100 font-bold mb-1 text-xs uppercase tracking-wider truncate">Total Rendered</p>
+                <h3 className="text-3xl sm:text-4xl font-black tracking-tight truncate">{totalHours.toFixed(2)}<span className="text-xl">h</span></h3>
               </div>
-              <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-2 rounded-xl flex items-center gap-2">
-                <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-12 bg-transparent outline-none font-bold text-right text-white text-sm" />
-                <span className="text-[10px] font-bold text-cyan-100 uppercase">goal</span>
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 px-2.5 sm:px-3 py-2 rounded-xl flex items-center gap-1.5 flex-shrink-0">
+                <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-10 sm:w-12 bg-transparent outline-none font-bold text-right text-white text-sm" />
+                <span className="text-[9px] sm:text-[10px] font-bold text-cyan-100 uppercase">goal</span>
               </div>
             </div>
             <div className="space-y-2">
@@ -227,14 +227,14 @@ export default function Dashboard({ session, darkMode }) {
                 <div className="bg-emerald-300 h-full rounded-full transition-all duration-1000 shadow-[0_0_10px_rgba(52,211,153,0.5)]" style={{ width: `${progressPercentage}%` }}></div>
               </div>
             </div>
-            <div className="mt-6 pt-5 border-t border-white/10 grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-cyan-200 text-[11px] font-bold mb-0.5 uppercase tracking-wider">Days Present</p>
-                <p className="font-black text-lg flex items-center gap-1.5 text-white"><CalendarDays className="w-4 h-4 text-cyan-200"/> {dtr.length}</p>
+            <div className="mt-6 pt-5 border-t border-white/10 grid grid-cols-2 gap-3 sm:gap-4 min-w-0">
+              <div className="min-w-0">
+                <p className="text-cyan-200 text-[10px] sm:text-[11px] font-bold mb-0.5 uppercase tracking-wider truncate">Days Present</p>
+                <p className="font-black text-base sm:text-lg flex items-center gap-1 text-white truncate"><CalendarDays className="w-4 h-4 text-cyan-200 flex-shrink-0"/> {dtr.length}</p>
               </div>
-              <div>
-                <p className="text-cyan-200 text-[11px] font-bold mb-0.5 uppercase tracking-wider">Avg Hrs/Day</p>
-                <p className="font-black text-lg flex items-center gap-1.5 text-white"><Clock className="w-4 h-4 text-cyan-200"/> {dtr.length > 0 ? (totalHours / dtr.length).toFixed(1) : 0}</p>
+              <div className="min-w-0">
+                <p className="text-cyan-200 text-[10px] sm:text-[11px] font-bold mb-0.5 uppercase tracking-wider truncate">Avg Hrs/Day</p>
+                <p className="font-black text-base sm:text-lg flex items-center gap-1 text-white truncate"><Clock className="w-4 h-4 text-cyan-200 flex-shrink-0"/> {dtr.length > 0 ? (totalHours / dtr.length).toFixed(1) : 0}</p>
               </div>
             </div>
           </div>
@@ -244,16 +244,16 @@ export default function Dashboard({ session, darkMode }) {
       <DtrForm userId={session.user.id} onEntryAdded={fetchDTR} />
 
       {/* Table Section */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden mt-8 transition-colors">
-        <div className="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-slate-900/50">
-          <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-base"><Clock className="w-5 h-5 text-cyan-500"/> Timesheet History</h3>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden mt-8 transition-colors min-w-0">
+        <div className="px-4 sm:px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50/50 dark:bg-slate-900/50 min-w-0">
+          <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-base truncate"><Clock className="w-5 h-5 text-cyan-500 flex-shrink-0"/> Timesheet History</h3>
           
-          <div className="relative w-full sm:w-72">
+          <div className="relative w-full sm:w-72 flex-shrink-0">
              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-400" /></div>
-             <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 shadow-sm" />
+             <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 shadow-sm min-w-0" />
           </div>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto w-full">
           <table className="w-full text-left border-collapse whitespace-nowrap text-xs">
             <thead>
               <tr className="bg-slate-50 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">

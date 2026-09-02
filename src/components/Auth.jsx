@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../supabaseClient'
-import { BookOpen, Lock, Mail, UserPlus, ArrowRight, Loader2, Sparkles, ShieldCheck } from 'lucide-react'
+import { BookOpen, Lock, Mail, UserPlus, ArrowRight, Loader2, Sparkles } from 'lucide-react'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -32,7 +32,7 @@ export default function Auth() {
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none"></div>
 
-      <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-8 relative z-10 transition-colors">
+      <div className="w-full max-w-[420px] bg-white dark:bg-slate-900 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-800 p-6 sm:p-8 relative z-10 transition-colors">
         
         <div className="flex justify-center mb-6">
           <div className="bg-gradient-to-tr from-cyan-500 to-indigo-600 p-4 rounded-2xl shadow-glow text-slate-950">
@@ -53,7 +53,7 @@ export default function Auth() {
             <div className="relative">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Mail className="w-4 h-4"/></span>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required 
-                className="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 transition-all" 
+                className="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 transition-all min-w-0" 
                 placeholder="student@rtu.edu.ph" />
             </div>
           </div>
@@ -63,7 +63,7 @@ export default function Auth() {
             <div className="relative">
               <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400"><Lock className="w-4 h-4"/></span>
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required 
-                className="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 transition-all" 
+                className="w-full pl-10 pr-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20 outline-none text-sm font-bold text-slate-900 dark:text-white placeholder:text-slate-400 transition-all min-w-0" 
                 placeholder="••••••••" />
             </div>
           </div>
