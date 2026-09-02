@@ -40,7 +40,6 @@ export default function DtrForm({ userId, onEntryAdded }) {
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft p-5 sm:p-6 md:p-8 w-full transition-colors mb-8 min-w-0">
       
-      {/* Header & Checkbox row with bulletproof flex wrapping for mobile */}
       <div className="flex flex-col gap-4 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800 min-w-0">
         <div className="flex items-center gap-3 min-w-0">
           <div className="bg-cyan-500/10 p-2.5 rounded-xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 flex-shrink-0 shadow-glow">

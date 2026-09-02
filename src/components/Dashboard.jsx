@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
 import DtrForm from './DtrForm';
-import { LogOut, Clock, CalendarDays, Building2, GraduationCap, User, Trash2, Edit, X, Save, FileSpreadsheet, Search, SearchX, ShieldCheck, Activity } from 'lucide-react';
+import { LogOut, Clock, CalendarDays, Building2, GraduationCap, User, Trash2, Edit, X, Save, FileSpreadsheet, Search, SearchX, ShieldCheck, Activity, Calculator, Sparkles, CheckCircle2 } from 'lucide-react';
 import { calculateHoursRendered, getGreeting, formatDateString } from '../utils';
 
 export default function Dashboard({ session, darkMode }) {
@@ -16,6 +16,11 @@ export default function Dashboard({ session, darkMode }) {
   const [editForm, setEditForm] = useState({});
   const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [deductLunchEdit, setDeductLunchEdit] = useState(true);
+
+  // NEW FEATURE: Target Completion Date Calculator State
+  const [targetDaysPerWeek, setTargetDaysPerWeek] = useState(5);
+  const [targetHoursPerDay, setTargetHoursPerDay] = useState(8);
+  const [showEstimator, setShowEstimator] = useState(false);
 
   useEffect(() => { fetchProfile(); fetchDTR(); }, [session]);
 
@@ -121,6 +126,13 @@ export default function Dashboard({ session, darkMode }) {
   const remainingHours = Math.max(profile.required_hours - totalHours, 0);
   const filteredDtr = dtr.filter(e => e.remarks?.toLowerCase().includes(searchTerm.toLowerCase()) || e.date.includes(searchTerm));
 
+  // Calculation for target completion
+  const hoursPerWeek = targetDaysPerWeek * targetHoursPerDay;
+  const weeksRemaining = hoursPerWeek > 0 ? remainingHours / hoursPerWeek : 0;
+  const estimatedCompletionDays = Math.ceil(weeksRemaining * 7);
+  const estimatedCompletionDate = new Date();
+  estimatedCompletionDate.setDate(estimatedCompletionDate.getDate() + estimatedCompletionDays);
+
   return (
     <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300 min-w-0">
       
@@ -177,7 +189,10 @@ export default function Dashboard({ session, darkMode }) {
           </div>
           <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight truncate max-w-full">{profile.full_name || session.user.email.split('@')[0]}</h1>
         </div>
-        <div className="flex gap-3 w-full md:w-auto text-sm flex-shrink-0 font-mono text-xs">
+        <div className="flex flex-wrap gap-2.5 w-full md:w-auto text-sm flex-shrink-0 font-mono text-xs">
+          <button onClick={() => setShowEstimator(!showEstimator)} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-cyan-600 dark:text-cyan-400 font-bold px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 transition-all">
+            <Calculator className="w-4 h-4" /> <span>{showEstimator ? 'Hide Estimator' : 'Hours Estimator'}</span>
+          </button>
           <button onClick={exportStyledExcel} className="flex-1 md:flex-none flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 shadow-glow font-black px-4 sm:px-5 py-3 rounded-xl transition-all">
             <FileSpreadsheet className="w-4 h-4 flex-shrink-0" /> <span>Export DTR</span>
           </button>
@@ -186,6 +201,34 @@ export default function Dashboard({ session, darkMode }) {
           </button>
         </div>
       </div>
+
+      {/* NEW FEATURE: Target Completion Date Estimator Card */}
+      {showEstimator && (
+        <div className="bg-gradient-to-r from-cyan-500/10 via-indigo-500/10 to-purple-500/10 border border-cyan-500/30 p-5 sm:p-6 rounded-3xl mb-8 font-mono shadow-soft">
+          <div className="flex items-center justify-between mb-4 pb-3 border-b border-cyan-500/20">
+            <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
+              <Sparkles className="w-4 h-4" /> OJT Completion Date Estimator
+            </div>
+            <button onClick={() => setShowEstimator(false)} className="text-slate-400 hover:text-white"><X className="w-4 h-4"/></button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+            <div>
+              <label className="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 mb-1">Target Days / Week</label>
+              <input type="number" min="1" max="7" value={targetDaysPerWeek} onChange={(e) => setTargetDaysPerWeek(Number(e.target.value))} className="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold" />
+            </div>
+            <div>
+              <label className="block text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 mb-1">Target Hours / Day</label>
+              <input type="number" min="1" max="12" value={targetHoursPerDay} onChange={(e) => setTargetHoursPerDay(Number(e.target.value))} className="w-full px-3 py-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold" />
+            </div>
+            <div className="bg-white/50 dark:bg-slate-950/50 p-3 rounded-2xl border border-cyan-500/20 text-center sm:text-left">
+              <p className="text-[10px] uppercase font-bold text-slate-400">Estimated Finish Date:</p>
+              <p className="text-sm font-black text-cyan-600 dark:text-cyan-400">
+                {remainingHours <= 0 ? 'Goal Completed! 🎉' : estimatedCompletionDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Profile & Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 min-w-0">
