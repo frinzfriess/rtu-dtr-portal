@@ -2,5 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { -webkit-tap-highlight-color: transparent; }
-input[type="time"], input[type="date"] { min-height: 44px; box-sizing: border-box; }
+html, body { -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+* { box-sizing: border-box; min-width: 0; }
+input[type="time"], input[type="date"] { min-height: 44px; width: 100%; max-width: 100%; box-sizing: border-box; }

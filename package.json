@@ -1,9 +1,9 @@
 {
   "name": "rtu-dtr-portal",
   "private": true,
-  "version": "24.0.0",
+  "version": "26.0.0",
   "type": "module",
-"scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "node ./node_modules/vite/bin/vite.js build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
