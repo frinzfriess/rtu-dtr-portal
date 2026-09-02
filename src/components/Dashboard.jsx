@@ -171,7 +171,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
   estimatedCompletionDate.setDate(estimatedCompletionDate.getDate() + estimatedCompletionDays);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-20 md:pb-0">
+    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-24 md:pb-0">
       
       {/* Edit Modal */}
       {editingEntry && (
@@ -217,7 +217,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
         </div>
       )}
 
-      {/* DESKTOP SIDEBAR NAVIGATION (Hidden on mobile) */}
+      {/* DESKTOP SIDEBAR NAVIGATION */}
       <aside className="hidden md:flex w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col justify-between p-6 flex-shrink-0 transition-colors">
         <div>
           <div className="flex items-center gap-3 pb-6 mb-6 border-b border-slate-200 dark:border-slate-800">
@@ -274,25 +274,25 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
         </div>
       </aside>
 
-      {/* MOBILE BOTTOM NAVIGATION BAR (Visible on mobile only) */}
-      <nav aria-label="Mobile Navigation" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex justify-around items-center">
-        <button onClick={() => setActiveTab('overview')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'overview' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+      {/* MOBILE BOTTOM NAVIGATION BAR */}
+      <nav aria-label="Mobile Navigation" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 px-3 py-2.5 flex justify-around items-center shadow-lg">
+        <button onClick={() => setActiveTab('overview')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'overview' ? 'text-cyan-500 font-black scale-105' : 'text-slate-400 dark:text-slate-500'}`}>
           <LayoutDashboard className="w-5 h-5"/>
           <span className="text-[10px] font-mono mt-0.5">Overview</span>
         </button>
-        <button onClick={() => setActiveTab('log')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'log' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+        <button onClick={() => setActiveTab('log')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'log' ? 'text-cyan-500 font-black scale-105' : 'text-slate-400 dark:text-slate-500'}`}>
           <PlusCircle className="w-5 h-5"/>
           <span className="text-[10px] font-mono mt-0.5">Log</span>
         </button>
-        <button onClick={() => setActiveTab('history')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'history' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+        <button onClick={() => setActiveTab('history')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'history' ? 'text-cyan-500 font-black scale-105' : 'text-slate-400 dark:text-slate-500'}`}>
           <FileText className="w-5 h-5"/>
           <span className="text-[10px] font-mono mt-0.5">History</span>
         </button>
-        <button onClick={() => setActiveTab('estimator')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'estimator' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+        <button onClick={() => setActiveTab('estimator')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'estimator' ? 'text-cyan-500 font-black scale-105' : 'text-slate-400 dark:text-slate-500'}`}>
           <Calculator className="w-5 h-5"/>
           <span className="text-[10px] font-mono mt-0.5">Estimator</span>
         </button>
-        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center p-2 rounded-xl transition-all ${activeTab === 'profile' ? 'text-cyan-500 font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+        <button onClick={() => setActiveTab('profile')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'profile' ? 'text-cyan-500 font-black scale-105' : 'text-slate-400 dark:text-slate-500'}`}>
           <UserCheck className="w-5 h-5"/>
           <span className="text-[10px] font-mono mt-0.5">Profile</span>
         </button>
@@ -302,7 +302,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-100 dark:bg-slate-950 transition-colors">
         
         {/* Top Header Bar */}
-        <header className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
+        <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
           <div>
             <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-widest mb-0.5">
               <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
@@ -318,8 +318,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
           </div>
 
           <div className="flex items-center gap-3 font-mono text-xs">
-            {/* Mobile theme toggle button */}
-            <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700">
+            <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-sm">
               {darkMode ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
             </button>
             <div className="hidden sm:flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm">
@@ -404,76 +403,86 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
-          {/* LOG HOURS TAB */}
+          {/* REDESIGNED MOBILE-FIRST LOG HOURS TAB */}
           {activeTab === 'log' && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn transition-colors">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-soft animate-fadeIn transition-colors max-w-2xl mx-auto">
+              <div className="flex flex-col gap-3 mb-6 pb-5 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shadow-glow">
+                  <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shadow-glow flex-shrink-0">
                     <Terminal className="w-6 h-6" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono">Log Daily Hours</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Record your daily OJT time-in, time-out, and tasks.</p>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono">Log Daily Hours</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Record your shift times below.</p>
                   </div>
                 </div>
 
+                {/* Mobile-optimized Toggle Badge */}
                 <button
                   type="button"
                   onClick={() => setDeductLunch(!deductLunch)}
-                  className={`flex items-center gap-2.5 px-4 py-3 rounded-2xl border transition-all select-none self-start sm:self-auto ${
-                    deductLunch ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-700 dark:text-cyan-300' : 'bg-slate-100 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-500'
+                  className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl border transition-all select-none ${
+                    deductLunch ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-700 dark:text-cyan-300' : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-400'
                   }`}
                 >
-                  <UtensilsCrossed className="w-4 h-4 flex-shrink-0" />
-                  <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch</span>
-                  <div className={`w-4 h-4 rounded-full flex items-center justify-center border transition-all ${
-                    deductLunch ? 'bg-cyan-500 border-cyan-600 text-slate-950' : 'bg-transparent border-slate-400'
+                  <div className="flex items-center gap-2">
+                    <UtensilsCrossed className="w-4 h-4 flex-shrink-0 text-cyan-500" />
+                    <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch break</span>
+                  </div>
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
+                    deductLunch ? 'bg-cyan-500 border-cyan-600 text-slate-950 font-bold' : 'bg-transparent border-slate-400'
                   }`}>
-                    {deductLunch && <div className="w-1.5 h-1.5 rounded-full bg-slate-950"></div>}
+                    {deductLunch && <div className="w-2 h-2 rounded-full bg-slate-950"></div>}
                   </div>
                 </button>
               </div>
 
-              <form onSubmit={handleLogSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                  <div>
-                    <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Date</label>
-                    <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
-                  </div>
-                  <div>
+              <form onSubmit={handleLogSubmit} className="space-y-5">
+                
+                {/* Date Input */}
+                <div>
+                  <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Date</label>
+                  <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} 
+                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono shadow-sm" />
+                </div>
+
+                {/* Time In & Time Out stacked cleanly for mobile */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                     <div className="flex justify-between items-center mb-2">
                        <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
-                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
-                         <Clock className="w-3 h-3 inline mr-1"/> Now
+                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-3 py-1 rounded-lg font-mono flex items-center gap-1">
+                         <Clock className="w-3 h-3"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeIn} onChange={(e) => setTimeIn(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
+                      className="w-full px-3 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center" />
                   </div>
-                  <div>
+
+                  <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                     <div className="flex justify-between items-center mb-2">
                        <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
-                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono">
-                         <Clock className="w-3 h-3 inline mr-1"/> Now
+                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-3 py-1 rounded-lg font-mono flex items-center gap-1">
+                         <Clock className="w-3 h-3"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeOut} onChange={(e) => setTimeOut(e.target.value)} 
-                      className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
+                      className="w-full px-3 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center" />
                   </div>
                 </div>
 
+                {/* Remarks Input */}
                 <div>
                   <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Remarks / Tasks</label>
-                  <input type="text" placeholder="E.g., System debugging, UI development..." value={remarks} onChange={(e) => setRemarks(e.target.value)} 
-                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-sans" />
+                  <textarea rows="3" placeholder="E.g., System debugging, UI updates, documentation..." value={remarks} onChange={(e) => setRemarks(e.target.value)} 
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-sans resize-none shadow-sm" />
                 </div>
 
-                <div className="flex justify-end pt-2">
+                {/* Full-width Mobile Submit Button */}
+                <div className="pt-2">
                   <button type="submit" disabled={submitting} 
-                    className={`w-full sm:w-auto font-bold px-8 py-4 rounded-2xl transition-all active:scale-95 shadow-glow font-mono text-xs tracking-wide flex items-center justify-center gap-2 ${
-                      successStatus ? 'bg-emerald-500 text-white' : 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-slate-950 font-black'
+                    className={`w-full font-bold py-4 rounded-2xl transition-all active:scale-[0.98] shadow-glow font-mono text-xs tracking-wide flex items-center justify-center gap-2 ${
+                      successStatus ? 'bg-emerald-500 text-white shadow-neon' : 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-slate-950 font-black'
                     }`}>
                     {successStatus ? <><CheckCircle2 className="w-4 h-4"/> Record Logged Successfully!</> : 'Submit Daily Record'}
                   </button>
