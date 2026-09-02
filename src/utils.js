@@ -13,9 +13,9 @@ export function getCurrentTime() {
 
 export function getGreeting() {
   const hour = new Date().getHours();
-  if (hour < 12) return 'Good Morning';
-  if (hour < 18) return 'Good Afternoon';
-  return 'Good Evening';
+  if (hour < 12) return 'Morning Briefing, Operative';
+  if (hour < 18) return 'Afternoon Protocol Active';
+  return 'Evening Sentinel Watch';
 }
 
 export function formatDateString(dateStr) {
