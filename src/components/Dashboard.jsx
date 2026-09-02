@@ -238,7 +238,6 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           </div>
 
-          {/* User Widget */}
           <div className="flex items-center gap-3 mb-6 p-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center text-white font-black text-sm shadow-md">
               {getInitials(profile?.full_name)}
@@ -345,13 +344,10 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
 
         <div className="p-4 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto space-y-6 pb-24 md:pb-8">
 
-          {/* OVERVIEW TAB - ENHANCED */}
+          {/* OVERVIEW TAB */}
           {activeTab === 'overview' && (
             <div className="space-y-6 w-full animate-fadeIn">
               <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden flex flex-col justify-between border border-slate-800">
-                <div className="absolute -right-20 -top-20 opacity-20 pointer-events-none text-cyan-500 blur-2xl">
-                  <Activity className="w-96 h-96" />
-                </div>
                 <div className="relative z-10">
                   <div className="flex items-center gap-2 mb-4">
                     <span className="bg-white/10 border border-white/20 px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase backdrop-blur-md flex items-center gap-1.5">
@@ -370,9 +366,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                     <span className="text-sm font-black text-cyan-400 font-mono">{totalHours.toFixed(1)} / {profile.required_hours} hrs</span>
                   </div>
                   <div className="w-full bg-slate-950 rounded-full h-3 overflow-hidden border border-slate-800 shadow-inner">
-                    <div className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full rounded-full relative" style={{ width: `${progressPercentage}%` }}>
-                       <div className="absolute inset-0 bg-white/20 w-full h-full animate-[shimmer_2s_infinite]"></div>
-                    </div>
+                    <div className="bg-gradient-to-r from-cyan-500 to-indigo-500 h-full rounded-full relative" style={{ width: `${progressPercentage}%` }}></div>
                   </div>
                 </div>
               </div>
@@ -380,7 +374,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
               {/* LIVE TIMER */}
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft flex flex-col sm:flex-row items-center justify-between gap-5 w-full transition-colors">
                 <div className="flex items-center gap-4">
-                  <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-3.5 rounded-2xl border border-cyan-500/20 shadow-[inset_0_0_15px_rgba(6,182,212,0.1)]">
+                  <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-3.5 rounded-2xl border border-cyan-500/20">
                     <Timer className="w-7 h-7 animate-pulse"/>
                   </div>
                   <div>
@@ -398,13 +392,11 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                   ) : (
                     <button onClick={() => setIsTimerRunning(false)} className="flex-1 sm:flex-none bg-rose-500 hover:bg-rose-400 text-white font-black px-6 py-3.5 rounded-xl shadow-lg transition-all">Pause</button>
                   )}
-                  <button onClick={() => { setIsTimerRunning(false); setTimerSeconds(0); }} className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-3.5 rounded-xl transition-all">Reset</button>
+                  <button onClick={() => { setIsTimerRunning(false); setTimerSeconds(0); }} className="bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-bold px-4 py-3.5 rounded-xl transition-all">Reset</button>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
-                
-                {/* Stats Section */}
                 <div className="lg:col-span-1 space-y-4">
                   <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-3xl shadow-soft flex items-center justify-between">
                     <div>
@@ -422,7 +414,6 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                   </div>
                 </div>
 
-                {/* Recent Activity Widget */}
                 <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft flex flex-col justify-between">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="text-sm font-black text-slate-900 dark:text-white font-mono uppercase tracking-wider flex items-center gap-2">
@@ -459,7 +450,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
-          {/* BULLETPROOF MOBILE LOG HOURS TAB */}
+          {/* SAFARI-FIXED LOG HOURS TAB */}
           {activeTab === 'log' && (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-soft max-w-xl mx-auto w-full box-border animate-fadeIn">
               
@@ -476,8 +467,6 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
               </div>
 
               <form onSubmit={handleLogSubmit} className="space-y-4 w-full block">
-                
-                {/* LUNCH BREAK TOGGLE */}
                 <div className="w-full">
                   <button
                     type="button"
@@ -498,14 +487,13 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                   </button>
                 </div>
 
-                {/* SAFARI BUG FIX: Wrapper styling, transparent input */}
-                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all shadow-sm">
+                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/25 transition-all shadow-sm">
                   <label className="block text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">Date</label>
                   <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} 
                     className="w-full bg-transparent border-none p-0 m-0 text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-0 font-mono block appearance-none" />
                 </div>
 
-                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all shadow-sm">
+                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/25 transition-all shadow-sm">
                   <div className="flex justify-between items-center mb-1.5 w-full">
                      <label className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
                      <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-md font-mono flex items-center gap-1 transition-colors">
@@ -516,7 +504,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                     className="w-full bg-transparent border-none p-0 m-0 text-lg sm:text-xl font-black text-slate-900 dark:text-white outline-none focus:ring-0 font-mono block appearance-none" />
                 </div>
 
-                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all shadow-sm">
+                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/25 transition-all shadow-sm">
                   <div className="flex justify-between items-center mb-1.5 w-full">
                      <label className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
                      <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-md font-mono flex items-center gap-1 transition-colors">
@@ -527,7 +515,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                     className="w-full bg-transparent border-none p-0 m-0 text-lg sm:text-xl font-black text-slate-900 dark:text-white outline-none focus:ring-0 font-mono block appearance-none" />
                 </div>
 
-                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/20 transition-all shadow-sm">
+                <div className="w-full bg-slate-50 dark:bg-slate-950 px-4 py-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 focus-within:border-cyan-500 focus-within:ring-2 focus-within:ring-cyan-500/25 transition-all shadow-sm">
                   <label className="block text-[10px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">Remarks / Tasks Accomplished</label>
                   <textarea rows="3" placeholder="E.g., System debugging, UI updates, documentation..." value={remarks} onChange={(e) => setRemarks(e.target.value)} 
                     className="w-full bg-transparent border-none p-0 m-0 text-xs sm:text-sm font-bold text-slate-900 dark:text-white outline-none focus:ring-0 font-sans resize-none block appearance-none" />
@@ -545,7 +533,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
-          {/* RICHER ANALYTICS TAB */}
+          {/* ANALYTICS TAB */}
           {activeTab === 'analytics' && (
             <div className="space-y-6 w-full animate-fadeIn">
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft">
@@ -582,7 +570,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                 </div>
 
                 <div className="mt-6 bg-gradient-to-r from-slate-900 to-indigo-950 text-white p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center gap-5 shadow-lg">
-                  <div className="bg-cyan-500/20 text-cyan-400 p-4 rounded-full border border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.3)]">
+                  <div className="bg-cyan-500/20 text-cyan-400 p-4 rounded-full border border-cyan-500/30">
                      <TrendingUp className="w-8 h-8"/>
                   </div>
                   <div className="text-center sm:text-left">
@@ -597,6 +585,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
+          {/* HISTORY TAB */}
           {activeTab === 'history' && (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden w-full animate-fadeIn">
               <div className="px-4 sm:px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 dark:bg-slate-950/50">
@@ -644,6 +633,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
+          {/* ESTIMATOR TAB */}
           {activeTab === 'estimator' && (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft max-w-2xl mx-auto w-full animate-fadeIn">
               <h3 className="text-lg font-black text-slate-900 dark:text-white mb-6 font-mono flex items-center gap-2 uppercase tracking-wide"><Calculator className="w-5 h-5 text-cyan-500"/> Completion Estimator</h3>
@@ -668,6 +658,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
+          {/* PROFILE TAB */}
           {activeTab === 'profile' && (
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft max-w-2xl mx-auto w-full animate-fadeIn">
               <h3 className="text-lg font-black text-slate-900 dark:text-white mb-6 font-mono flex items-center gap-2 uppercase tracking-wide"><UserCheck className="w-5 h-5 text-cyan-500"/> Profile Settings</h3>
