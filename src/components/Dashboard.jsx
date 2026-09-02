@@ -14,7 +14,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
   const [totalHours, setTotalHours] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'log' | 'history' | 'profile' | 'estimator'
+  const [activeTab, setActiveTab] = useState('overview');
 
   // Form State
   const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
@@ -171,7 +171,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
   estimatedCompletionDate.setDate(estimatedCompletionDate.getDate() + estimatedCompletionDays);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-24 md:pb-0">
+    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-28 md:pb-0 overflow-x-hidden">
       
       {/* Edit Modal */}
       {editingEntry && (
@@ -299,16 +299,16 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
       </nav>
 
       {/* MAIN CONTENT AREA */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto bg-slate-100 dark:bg-slate-950 transition-colors">
+      <main className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto bg-slate-100 dark:bg-slate-950 transition-colors">
         
         {/* Top Header Bar */}
-        <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
-          <div>
+        <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 flex items-center justify-between sticky top-0 z-30 transition-colors w-full box-border">
+          <div className="min-w-0 pr-2">
             <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-widest mb-0.5">
-              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
-              {getGreeting()}
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse flex-shrink-0"></span>
+              <span className="truncate">{getGreeting()}</span>
             </div>
-            <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white tracking-tight truncate">
+            <h2 className="text-base sm:text-xl font-black text-slate-900 dark:text-white tracking-tight truncate">
               {activeTab === 'overview' && 'Dashboard Overview'}
               {activeTab === 'log' && 'Log Daily Hours'}
               {activeTab === 'history' && 'Timesheet History & Logs'}
@@ -317,8 +317,8 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </h2>
           </div>
 
-          <div className="flex items-center gap-3 font-mono text-xs">
-            <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-sm">
+          <div className="flex items-center gap-2 sm:gap-3 font-mono text-xs flex-shrink-0">
+            <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-sm flex-shrink-0">
               {darkMode ? <Sun className="w-4 h-4"/> : <Moon className="w-4 h-4"/>}
             </button>
             <div className="hidden sm:flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl shadow-sm">
@@ -334,67 +334,67 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
           </div>
         </header>
 
-        {/* Tab Content Container */}
-        <div className="p-4 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto space-y-8">
+        {/* Tab Content Container with strict box-sizing & max-w constraints */}
+        <div className="p-3 sm:p-6 lg:p-8 max-w-6xl w-full mx-auto space-y-6 box-border overflow-hidden">
 
           {/* OVERVIEW TAB */}
           {activeTab === 'overview' && (
-            <div className="space-y-8 animate-fadeIn">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
+            <div className="space-y-6 animate-fadeIn w-full box-border">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full box-border">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Total Rendered</span>
                     <div className="bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 p-2.5 rounded-2xl border border-cyan-500/20"><Clock className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-2">{totalHours.toFixed(2)}<span className="text-base text-cyan-500">h</span></h3>
+                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-slate-900 dark:text-white mb-2">{totalHours.toFixed(2)}<span className="text-base text-cyan-500">h</span></h3>
                   <div className="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800">
                     <div className="bg-gradient-to-r from-cyan-400 to-indigo-500 h-full rounded-full transition-all duration-1000" style={{ width: `${progressPercentage}%` }}></div>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Days Present</span>
                     <div className="bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 p-2.5 rounded-2xl border border-indigo-500/20"><CalendarDays className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{dtr.length}</h3>
+                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-slate-900 dark:text-white mb-1">{dtr.length}</h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Recorded shifts</p>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-soft transition-colors">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl shadow-soft transition-colors w-full box-border">
                   <div className="flex justify-between items-start mb-4">
                     <span className="text-[10px] font-mono font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Hours Remaining</span>
                     <div className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 p-2.5 rounded-2xl border border-emerald-500/20"><Award className="w-5 h-5"/></div>
                   </div>
-                  <h3 className="text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-base">h</span></h3>
+                  <h3 className="text-2xl sm:text-3xl font-black font-mono text-emerald-600 dark:text-emerald-400 mb-1">{remainingHours.toFixed(2)}<span className="text-base">h</span></h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">{progressPercentage.toFixed(1)}% completed</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white border border-cyan-500/30 p-6 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 w-full box-border">
+                <div className="lg:col-span-2 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white border border-cyan-500/30 p-5 sm:p-8 rounded-3xl shadow-xl flex flex-col justify-between w-full box-border">
                   <div>
                     <span className="text-xs font-mono font-bold text-cyan-200 uppercase tracking-widest block mb-2">Ready to work?</span>
-                    <h3 className="text-2xl font-black text-white mb-3">Log your OJT hours instantly</h3>
-                    <p className="text-sm text-cyan-100 mb-6 font-sans">Keep your timesheet up to date and generate official RTU DTR spreadsheet exports instantly.</p>
+                    <h3 className="text-xl sm:text-2xl font-black text-white mb-3">Log your OJT hours instantly</h3>
+                    <p className="text-xs sm:text-sm text-cyan-100 mb-6 font-sans">Keep your timesheet up to date and generate official RTU DTR spreadsheet exports instantly.</p>
                   </div>
                   <div className="flex flex-wrap gap-3 font-mono">
-                    <button onClick={() => setActiveTab('log')} className="bg-white text-slate-950 font-black px-6 py-3.5 rounded-2xl shadow-lg transition-all text-xs flex items-center gap-2 hover:bg-cyan-50">
+                    <button onClick={() => setActiveTab('log')} className="bg-white text-slate-950 font-black px-5 py-3 rounded-2xl shadow-lg transition-all text-xs flex items-center gap-2 hover:bg-cyan-50">
                       <PlusCircle className="w-4 h-4"/> Log New Hours Now
                     </button>
-                    <button onClick={() => setActiveTab('history')} className="bg-black/20 hover:bg-black/30 text-white font-bold px-6 py-3.5 rounded-2xl transition-all text-xs border border-white/20">
+                    <button onClick={() => setActiveTab('history')} className="bg-black/20 hover:bg-black/30 text-white font-bold px-5 py-3 rounded-2xl transition-all text-xs border border-white/20">
                       View All Records
                     </button>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl flex flex-col justify-between shadow-soft transition-colors">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 sm:p-6 rounded-3xl flex flex-col justify-between shadow-soft transition-colors w-full box-border">
                   <div>
                     <h3 className="text-sm font-black font-mono text-slate-900 dark:text-white mb-4 uppercase tracking-wider flex items-center gap-2"><User className="w-4 h-4 text-cyan-500"/> Quick Profile</h3>
                     <div className="space-y-3 text-xs font-mono">
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Name</span> <span className="font-bold text-slate-900 dark:text-white">{profile.full_name || 'Not Set'}</span></div>
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Company</span> <span className="font-bold text-slate-900 dark:text-white">{profile.company_name}</span></div>
-                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">School</span> <span className="font-bold text-slate-900 dark:text-white">{profile.school}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Name</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.full_name || 'Not Set'}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">Company</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.company_name}</span></div>
+                      <div><span className="text-slate-400 dark:text-slate-500 block text-[10px] uppercase">School</span> <span className="font-bold text-slate-900 dark:text-white truncate block">{profile.school}</span></div>
                     </div>
                   </div>
                   <button onClick={() => setActiveTab('profile')} className="mt-6 text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1">Edit Profile details &rarr;</button>
@@ -403,33 +403,34 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
             </div>
           )}
 
-          {/* REDESIGNED MOBILE-FIRST LOG HOURS TAB */}
+          {/* BULLETPROOF NON-OVERLAPPING MOBILE-FIRST LOG HOURS TAB */}
           {activeTab === 'log' && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-soft animate-fadeIn transition-colors max-w-2xl mx-auto">
-              <div className="flex flex-col gap-3 mb-6 pb-5 border-b border-slate-100 dark:border-slate-800">
-                <div className="flex items-center gap-3">
-                  <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shadow-glow flex-shrink-0">
-                    <Terminal className="w-6 h-6" />
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-4 sm:p-8 shadow-soft animate-fadeIn transition-colors max-w-xl mx-auto w-full box-border">
+              
+              <div className="flex flex-col gap-3 mb-5 pb-4 border-b border-slate-100 dark:border-slate-800 w-full box-border">
+                <div className="flex items-center gap-3 w-full box-border min-w-0">
+                  <div className="bg-cyan-500/10 p-2.5 sm:p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 shadow-glow flex-shrink-0">
+                    <Terminal className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono">Log Daily Hours</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">Record your shift times below.</p>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-sm sm:text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider font-mono truncate">Log Daily Hours</h3>
+                    <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-mono truncate">Record your shift times below.</p>
                   </div>
                 </div>
 
-                {/* Mobile-optimized Toggle Badge */}
+                {/* Fully responsive toggle container with word wrap protection */}
                 <button
                   type="button"
                   onClick={() => setDeductLunch(!deductLunch)}
-                  className={`w-full flex items-center justify-between px-4 py-3 rounded-2xl border transition-all select-none ${
+                  className={`w-full flex items-center justify-between gap-2 px-3.5 py-3 rounded-2xl border transition-all select-none box-border ${
                     deductLunch ? 'bg-cyan-500/10 border-cyan-500/40 text-cyan-700 dark:text-cyan-300' : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-400'
                   }`}
                 >
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
                     <UtensilsCrossed className="w-4 h-4 flex-shrink-0 text-cyan-500" />
-                    <span className="text-xs font-bold font-mono">Auto-deduct 1h lunch break</span>
+                    <span className="text-[11px] sm:text-xs font-bold font-mono truncate">Auto-deduct 1h lunch break</span>
                   </div>
-                  <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all ${
+                  <div className={`w-5 h-5 rounded-full flex items-center justify-center border transition-all flex-shrink-0 ${
                     deductLunch ? 'bg-cyan-500 border-cyan-600 text-slate-950 font-bold' : 'bg-transparent border-slate-400'
                   }`}>
                     {deductLunch && <div className="w-2 h-2 rounded-full bg-slate-950"></div>}
@@ -437,51 +438,55 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                 </button>
               </div>
 
-              <form onSubmit={handleLogSubmit} className="space-y-5">
+              <form onSubmit={handleLogSubmit} className="space-y-4 w-full box-border">
                 
                 {/* Date Input */}
-                <div>
-                  <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Date</label>
+                <div className="w-full box-border">
+                  <label className="block text-[10px] sm:text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">Date</label>
                   <input type="date" required value={date} onChange={(e) => setDate(e.target.value)} 
-                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono shadow-sm" />
+                    className="w-full px-3.5 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs sm:text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono box-border shadow-sm" />
                 </div>
 
-                {/* Time In & Time Out stacked cleanly for mobile */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-                    <div className="flex justify-between items-center mb-2">
-                       <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
-                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-3 py-1 rounded-lg font-mono flex items-center gap-1">
+                {/* Time In & Time Out stacked safely without overlapping */}
+                <div className="grid grid-cols-1 gap-3.5 w-full box-border">
+                  
+                  {/* Time In Container */}
+                  <div className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 w-full box-border">
+                    <div className="flex justify-between items-center mb-1.5 w-full box-border">
+                       <label className="text-[10px] sm:text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time In</label>
+                       <button type="button" onClick={() => setTimeIn(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono flex items-center gap-1 flex-shrink-0">
                          <Clock className="w-3 h-3"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeIn} onChange={(e) => setTimeIn(e.target.value)} 
-                      className="w-full px-3 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center" />
+                      className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm sm:text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center box-border" />
                   </div>
 
-                  <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
-                    <div className="flex justify-between items-center mb-2">
-                       <label className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
-                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-3 py-1 rounded-lg font-mono flex items-center gap-1">
+                  {/* Time Out Container */}
+                  <div className="bg-slate-50 dark:bg-slate-950 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 w-full box-border">
+                    <div className="flex justify-between items-center mb-1.5 w-full box-border">
+                       <label className="text-[10px] sm:text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">Time Out</label>
+                       <button type="button" onClick={() => setTimeOut(getCurrentTime())} className="text-[10px] font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-500/10 hover:bg-cyan-500/20 px-2.5 py-1 rounded-lg font-mono flex items-center gap-1 flex-shrink-0">
                          <Clock className="w-3 h-3"/> Now
                        </button>
                     </div>
                     <input type="time" required value={timeOut} onChange={(e) => setTimeOut(e.target.value)} 
-                      className="w-full px-3 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center" />
+                      className="w-full px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm sm:text-base font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono text-center box-border" />
                   </div>
+
                 </div>
 
                 {/* Remarks Input */}
-                <div>
-                  <label className="block text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-2 font-mono">Remarks / Tasks</label>
+                <div className="w-full box-border">
+                  <label className="block text-[10px] sm:text-[11px] font-bold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest mb-1.5 font-mono">Remarks / Tasks</label>
                   <textarea rows="3" placeholder="E.g., System debugging, UI updates, documentation..." value={remarks} onChange={(e) => setRemarks(e.target.value)} 
-                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-sans resize-none shadow-sm" />
+                    className="w-full px-3.5 py-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs sm:text-sm font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-sans resize-none box-border shadow-sm" />
                 </div>
 
-                {/* Full-width Mobile Submit Button */}
-                <div className="pt-2">
+                {/* Full-width Submit Button */}
+                <div className="pt-1 w-full box-border">
                   <button type="submit" disabled={submitting} 
-                    className={`w-full font-bold py-4 rounded-2xl transition-all active:scale-[0.98] shadow-glow font-mono text-xs tracking-wide flex items-center justify-center gap-2 ${
+                    className={`w-full font-bold py-3.5 sm:py-4 rounded-2xl transition-all active:scale-[0.98] shadow-glow font-mono text-xs tracking-wide flex items-center justify-center gap-2 box-border ${
                       successStatus ? 'bg-emerald-500 text-white shadow-neon' : 'bg-gradient-to-r from-cyan-500 to-indigo-600 hover:from-cyan-400 text-slate-950 font-black'
                     }`}>
                     {successStatus ? <><CheckCircle2 className="w-4 h-4"/> Record Logged Successfully!</> : 'Submit Daily Record'}
@@ -493,9 +498,9 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
 
           {/* HISTORY TAB */}
           {activeTab === 'history' && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden animate-fadeIn transition-colors">
-              <div className="px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 dark:bg-slate-950/50">
-                <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-base font-mono uppercase tracking-wider"><Clock className="w-5 h-5 text-cyan-500"/> Timesheet History</h3>
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-soft overflow-hidden animate-fadeIn transition-colors w-full box-border">
+              <div className="px-4 sm:px-6 py-5 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-slate-50 dark:bg-slate-950/50 w-full box-border">
+                <h3 className="font-black text-slate-900 dark:text-white flex items-center gap-2 text-base font-mono uppercase tracking-wider truncate"><Clock className="w-5 h-5 text-cyan-500 flex-shrink-0"/> Timesheet History</h3>
                 <div className="relative w-full sm:w-72">
                    <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none"><Search className="h-4 w-4 text-slate-400" /></div>
                    <input type="text" placeholder="Search records..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:border-cyan-500 font-mono" />
@@ -541,7 +546,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
 
           {/* ESTIMATOR TAB */}
           {activeTab === 'estimator' && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors w-full box-border">
               <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
                   <Calculator className="w-6 h-6"/>
@@ -577,7 +582,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
 
           {/* PROFILE TAB */}
           {activeTab === 'profile' && (
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 sm:p-8 shadow-soft animate-fadeIn max-w-3xl transition-colors w-full box-border">
               <h3 className="text-lg font-black text-slate-900 dark:text-white mb-6 flex items-center gap-2 font-mono"><User className="w-5 h-5 text-cyan-500"/> Student Profile Settings</h3>
               <div className="space-y-5 font-mono">
                 <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
@@ -594,7 +599,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
                 </div>
                 <div className="bg-slate-50 dark:bg-slate-950 p-4 rounded-2xl border border-slate-200 dark:border-slate-800">
                   <label className="text-[10px] uppercase text-slate-500 dark:text-slate-400 font-bold block mb-1">Required OJT Hours Goal</label>
-                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-600 dark:text-cyan-400 text-sm" />
+                  <input type="number" defaultValue={profile.required_hours} onBlur={(e) => updateProfileInfo('required_hours', e.target.value)} className="w-full bg-transparent outline-none font-bold text-cyan-600 dark:text-cyan-400text-sm" />
                 </div>
               </div>
             </div>
