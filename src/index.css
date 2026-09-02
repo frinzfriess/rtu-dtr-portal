@@ -2,5 +2,4 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-*, *::before, *::after { box-sizing: inherit; }
+html, body { -webkit-tap-highlight-color: transparent; }
