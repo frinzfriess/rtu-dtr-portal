@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Printer, RotateCcw } from 'lucide-react';
-import { getHoursDiff, getDaysInMonth, formatMonthLabel, shiftMonth } from '../utils';
+import { getHoursDiff, formatMonthLabel, shiftMonth } from '../utils';
+
+const DAYS_IN_FORM = 31;
 
 function emptyRow() {
   return { am_in: '', am_out: '', pm_in: '', pm_out: '' };
 }
 
-function buildRowsFromLogs(dtr, month, dayCount) {
+function buildRowsFromLogs(dtr, month, dayCount = DAYS_IN_FORM) {
   const rows = Array.from({ length: dayCount }, emptyRow);
   (dtr || []).forEach((entry) => {
     if (!entry.date || !entry.date.startsWith(month)) return;
@@ -140,14 +142,14 @@ function DTRSheet({
         I CERTIFY on my honor that the above is a true and correct report of hours of work performed, record of which was made daily at the time of arrival and departure from office.
       </p>
 
-      <div className="flex justify-between gap-3 mt-4 text-center text-[7px]">
-        <div className="flex-1">
+      <div className="flex flex-col items-center text-center text-[7px]">
+        <div className="mt-6 print:mt-5 w-40">
           <div className="border-t border-slate-600 pt-0.5 font-bold print:border-black">{name || ' '}</div>
           <p>Signature of Employee</p>
         </div>
 
-        <div className="flex-1">
-          <p className="font-semibold mb-2.5 text-left">Verified as to prescribed office hours:</p>
+        <div className="mt-6 print:mt-5 w-40">
+          <p className="font-semibold mb-3 print:mb-2.5 text-center">Verified as to prescribed office hours:</p>
           <input
             type="text"
             value={verifierName}
@@ -185,24 +187,22 @@ export default function DTRGenerator({ profile, dtr }) {
   const [verifierTitle, setVerifierTitle] = useState('Admin Officer V');
   const [verifierOffice, setVerifierOffice] = useState('Civ HR Supervisor');
 
-  const dayCountA = useMemo(() => getDaysInMonth(monthA), [monthA]);
-  const dayCountB = useMemo(() => getDaysInMonth(monthB), [monthB]);
-  const [rowsA, setRowsA] = useState(() => buildRowsFromLogs(dtr, monthA, dayCountA));
-  const [rowsB, setRowsB] = useState(() => buildRowsFromLogs(dtr, monthB, dayCountB));
+  const [rowsA, setRowsA] = useState(() => buildRowsFromLogs(dtr, monthA));
+  const [rowsB, setRowsB] = useState(() => buildRowsFromLogs(dtr, monthB));
 
   useEffect(() => {
-    setRowsA(buildRowsFromLogs(dtr, monthA, dayCountA));
+    setRowsA(buildRowsFromLogs(dtr, monthA));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [monthA, dayCountA]);
+  }, [monthA]);
 
   useEffect(() => {
-    setRowsB(buildRowsFromLogs(dtr, monthB, dayCountB));
+    setRowsB(buildRowsFromLogs(dtr, monthB));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [monthB, dayCountB]);
+  }, [monthB]);
 
   function refreshFromLogs() {
-    setRowsA(buildRowsFromLogs(dtr, monthA, dayCountA));
-    setRowsB(buildRowsFromLogs(dtr, monthB, dayCountB));
+    setRowsA(buildRowsFromLogs(dtr, monthA));
+    setRowsB(buildRowsFromLogs(dtr, monthB));
   }
 
   function updateCellA(dayIdx, field, value) {
