@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../supabaseClient';
-import { 
-  LogOut, Clock, CalendarDays, User, 
-  Trash2, Edit, X, Save, FileSpreadsheet, Search, Calculator, 
-  CheckCircle2, Terminal, UtensilsCrossed, LayoutDashboard, 
+import {
+  LogOut, Clock, CalendarDays, User,
+  Trash2, Edit, X, Save, FileSpreadsheet, Search, Calculator,
+  CheckCircle2, Terminal, UtensilsCrossed, LayoutDashboard,
   FileText, UserCheck, ChevronRight, PlusCircle, Shield, Sun, Moon,
   Timer, BarChart3, TrendingUp, Award, Zap, History
 } from 'lucide-react';
 import { calculateHoursRendered, getGreeting, formatDateString, getCurrentTime, getInitials } from '../utils';
+import DTRGenerator from './DTRGenerator';
 
 export default function Dashboard({ session, darkMode, setDarkMode }) {
   const [profile, setProfile] = useState(null);
@@ -185,7 +186,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
   const efficiencyRate = profile.required_hours > 0 ? ((totalHours / profile.required_hours) * 100).toFixed(1) : 0;
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-28 md:pb-0 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col md:flex-row bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300 pb-28 md:pb-0 overflow-x-hidden print:bg-white print:pb-0">
       
       {/* EDIT MODAL */}
       {editingEntry && (
@@ -228,7 +229,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
       )}
 
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col justify-between p-6 flex-shrink-0">
+      <aside className="hidden md:flex w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex-col justify-between p-6 flex-shrink-0 print:hidden">
         <div>
           <div className="flex items-center gap-3 pb-6 mb-6 border-b border-slate-200 dark:border-slate-800">
             <div className="bg-cyan-500/10 p-3 rounded-2xl text-cyan-600 dark:text-cyan-400 border border-cyan-500/20"><Shield className="w-6 h-6" /></div>
@@ -269,6 +270,10 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
               <div className="flex items-center gap-3"><Calculator className="w-4 h-4"/> Estimator</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-60"/>
             </button>
+            <button onClick={() => setActiveTab('generate')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'generate' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
+              <div className="flex items-center gap-3"><FileText className="w-4 h-4"/> Generate DTR</div>
+              <ChevronRight className="w-3.5 h-3.5 opacity-60"/>
+            </button>
             <button onClick={() => setActiveTab('profile')} className={`w-full flex items-center justify-between px-4 py-3.5 rounded-2xl transition-all ${activeTab === 'profile' ? 'bg-cyan-500 text-slate-950 font-black shadow-glow' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'}`}>
               <div className="flex items-center gap-3"><UserCheck className="w-4 h-4"/> Profile</div>
               <ChevronRight className="w-3.5 h-3.5 opacity-60"/>
@@ -292,7 +297,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
       </aside>
 
       {/* MOBILE BOTTOM NAV */}
-      <nav aria-label="Mobile Navigation" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-2 py-2 flex justify-around items-center shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+      <nav aria-label="Mobile Navigation" className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800 px-2 py-2 flex justify-around items-center shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] print:hidden">
         <button onClick={() => setActiveTab('overview')} className={`flex flex-col items-center p-1.5 rounded-xl transition-all ${activeTab === 'overview' ? 'text-cyan-500 font-black' : 'text-slate-400'}`}>
           <LayoutDashboard className="w-5 h-5 mb-0.5"/><span className="text-[9px] font-mono">Home</span>
         </button>
@@ -311,9 +316,9 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
       </nav>
 
       {/* MAIN CONTAINER */}
-      <main className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto bg-slate-100 dark:bg-slate-950 relative">
-        
-        <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+      <main className="flex-1 flex flex-col min-w-0 w-full overflow-y-auto bg-slate-100 dark:bg-slate-950 relative print:bg-white print:overflow-visible">
+
+        <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 flex items-center justify-between sticky top-0 z-30 print:hidden">
           <div className="min-w-0 pr-2">
             <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400 text-[11px] font-mono font-bold uppercase tracking-widest">
               <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
@@ -325,6 +330,7 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
               {activeTab === 'analytics' && 'Performance Analytics'}
               {activeTab === 'history' && 'Timesheet History'}
               {activeTab === 'estimator' && 'OJT Estimator'}
+              {activeTab === 'generate' && 'Generate DTR'}
               {activeTab === 'profile' && 'Student Profile'}
             </h2>
           </div>
@@ -332,6 +338,9 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
           <div className="flex items-center gap-2 font-mono text-xs">
             <button onClick={() => setDarkMode(!darkMode)} className="md:hidden p-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
               {darkMode ? <Sun className="w-4 h-4 text-amber-400"/> : <Moon className="w-4 h-4"/>}
+            </button>
+            <button onClick={() => setActiveTab('generate')} className="md:hidden p-2 rounded-xl bg-cyan-500/10 text-cyan-600 border border-cyan-500/20">
+              <FileText className="w-4 h-4"/>
             </button>
             <button onClick={() => setActiveTab('profile')} className="md:hidden p-2 rounded-xl bg-cyan-500/10 text-cyan-600 border border-cyan-500/20">
               <User className="w-4 h-4"/>
@@ -657,6 +666,9 @@ export default function Dashboard({ session, darkMode, setDarkMode }) {
               </div>
             </div>
           )}
+
+          {/* GENERATE DTR TAB */}
+          {activeTab === 'generate' && <DTRGenerator profile={profile} dtr={dtr} />}
 
           {/* PROFILE TAB */}
           {activeTab === 'profile' && (

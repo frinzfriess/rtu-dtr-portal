@@ -26,3 +26,23 @@ export function getInitials(name) {
   if (!name) return 'S';
   return name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 }
+
+export function getHoursDiff(start, end) {
+  if (!start || !end) return 0;
+  const [sh, sm] = start.split(':').map(Number);
+  const [eh, em] = end.split(':').map(Number);
+  const diff = (eh * 60 + em - (sh * 60 + sm)) / 60;
+  return diff > 0 ? diff : 0;
+}
+
+export function getDaysInMonth(monthStr) {
+  const [y, m] = (monthStr || '').split('-').map(Number);
+  if (!y || !m) return 31;
+  return new Date(y, m, 0).getDate();
+}
+
+export function formatMonthLabel(monthStr) {
+  const [y, m] = (monthStr || '').split('-').map(Number);
+  if (!y || !m) return '';
+  return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
