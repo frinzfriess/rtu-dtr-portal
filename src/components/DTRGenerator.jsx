@@ -111,19 +111,19 @@ function DTRSheet({
             <tr key={`${idPrefix}-${idx}`}>
               <td className="border border-slate-400 text-center font-semibold print:border-black">{idx + 1}</td>
               <td className="border border-slate-400 p-0 print:border-black">
-                <input type="time" value={row.am_in} onChange={(e) => updateCell(idx, 'am_in', e.target.value)}
+                <input type="text" inputMode="numeric" maxLength={5} placeholder="--:--" value={row.am_in} onChange={(e) => updateCell(idx, 'am_in', e.target.value)}
                   className={`text-center py-0 print:h-[11px] print:leading-none ${inputCls}`} />
               </td>
               <td className="border border-slate-400 p-0 print:border-black">
-                <input type="time" value={row.am_out} onChange={(e) => updateCell(idx, 'am_out', e.target.value)}
+                <input type="text" inputMode="numeric" maxLength={5} placeholder="--:--" value={row.am_out} onChange={(e) => updateCell(idx, 'am_out', e.target.value)}
                   className={`text-center py-0 print:h-[11px] print:leading-none ${inputCls}`} />
               </td>
               <td className="border border-slate-400 p-0 print:border-black">
-                <input type="time" value={row.pm_in} onChange={(e) => updateCell(idx, 'pm_in', e.target.value)}
+                <input type="text" inputMode="numeric" maxLength={5} placeholder="--:--" value={row.pm_in} onChange={(e) => updateCell(idx, 'pm_in', e.target.value)}
                   className={`text-center py-0 print:h-[11px] print:leading-none ${inputCls}`} />
               </td>
               <td className="border border-slate-400 p-0 print:border-black">
-                <input type="time" value={row.pm_out} onChange={(e) => updateCell(idx, 'pm_out', e.target.value)}
+                <input type="text" inputMode="numeric" maxLength={5} placeholder="--:--" value={row.pm_out} onChange={(e) => updateCell(idx, 'pm_out', e.target.value)}
                   className={`text-center py-0 print:h-[11px] print:leading-none ${inputCls}`} />
               </td>
               <td className="border border-slate-400 text-center font-semibold print:border-black">
