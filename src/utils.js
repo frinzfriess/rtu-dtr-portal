@@ -46,3 +46,10 @@ export function formatMonthLabel(monthStr) {
   if (!y || !m) return '';
   return new Date(y, m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 }
+
+export function shiftMonth(monthStr, delta) {
+  const [y, m] = (monthStr || '').split('-').map(Number);
+  if (!y || !m) return monthStr;
+  const d = new Date(y, m - 1 + delta, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
