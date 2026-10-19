@@ -19,11 +19,19 @@ function buildRowsFromLogs(dtr, month, dayCount = DAYS_IN_FORM) {
     const timeOut = entry.time_out?.substring(0, 5) || '';
     if (!timeIn || !timeOut) return;
 
-    // No lunch break to carve out — the logged time in/out is the full worked
-    // span, so it goes straight into one pair and the total matches the log exactly.
-    rows[day - 1] = { am_in: timeIn, am_out: timeOut, pm_in: '', pm_out: '' };
+    // No lunch break: arrival goes under A.M., departure under P.M., nothing
+    // logged for the midday out/in — the total is computed as one continuous span.
+    rows[day - 1] = { am_in: timeIn, am_out: '', pm_in: '', pm_out: timeOut };
   });
   return rows;
+}
+
+function computeRowTotal(row) {
+  const amSpan = getHoursDiff(row.am_in, row.am_out);
+  const pmSpan = getHoursDiff(row.pm_in, row.pm_out);
+  if (amSpan > 0 || pmSpan > 0) return amSpan + pmSpan;
+  // No lunch recorded (A.M. out / P.M. in both blank) — treat as one continuous shift.
+  return getHoursDiff(row.am_in, row.pm_out);
 }
 
 const inputCls = 'w-full bg-transparent border-0 outline-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent';
@@ -208,8 +216,8 @@ export default function DTRGenerator({ profile, dtr }) {
     setRowsB((prev) => prev.map((r, i) => (i === dayIdx ? { ...r, [field]: value } : r)));
   }
 
-  const dailyTotalsA = useMemo(() => rowsA.map((r) => getHoursDiff(r.am_in, r.am_out) + getHoursDiff(r.pm_in, r.pm_out)), [rowsA]);
-  const dailyTotalsB = useMemo(() => rowsB.map((r) => getHoursDiff(r.am_in, r.am_out) + getHoursDiff(r.pm_in, r.pm_out)), [rowsB]);
+  const dailyTotalsA = useMemo(() => rowsA.map(computeRowTotal), [rowsA]);
+  const dailyTotalsB = useMemo(() => rowsB.map(computeRowTotal), [rowsB]);
   const monthTotalA = useMemo(() => dailyTotalsA.reduce((sum, h) => sum + h, 0), [dailyTotalsA]);
   const monthTotalB = useMemo(() => dailyTotalsB.reduce((sum, h) => sum + h, 0), [dailyTotalsB]);
 
