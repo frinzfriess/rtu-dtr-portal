@@ -153,7 +153,7 @@ function DTRSheet({
         </div>
 
         <div className="mt-6 print:mt-5 w-40">
-          <p className="font-semibold mb-3 print:mb-2.5 text-center">Verified as to prescribed office hours:</p>
+          <p className="font-semibold mb-6 print:mb-5 text-center">Verified as to prescribed office hours:</p>
           <input
             type="text"
             value={verifierName}
