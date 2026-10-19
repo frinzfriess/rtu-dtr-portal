@@ -19,13 +19,9 @@ function buildRowsFromLogs(dtr, month, dayCount = DAYS_IN_FORM) {
     const timeOut = entry.time_out?.substring(0, 5) || '';
     if (!timeIn || !timeOut) return;
 
-    // Shifts that cross the lunch hour are split into AM/PM halves (matches the
-    // 1h lunch auto-deduction already used for the logged hours elsewhere in the app).
-    if (timeIn < '12:00' && timeOut > '13:00') {
-      rows[day - 1] = { am_in: timeIn, am_out: '12:00', pm_in: '13:00', pm_out: timeOut };
-    } else {
-      rows[day - 1] = { am_in: timeIn, am_out: timeOut, pm_in: '', pm_out: '' };
-    }
+    // No lunch break to carve out — the logged time in/out is the full worked
+    // span, so it goes straight into one pair and the total matches the log exactly.
+    rows[day - 1] = { am_in: timeIn, am_out: timeOut, pm_in: '', pm_out: '' };
   });
   return rows;
 }
