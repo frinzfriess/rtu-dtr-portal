@@ -76,13 +76,13 @@ export default function DTRGenerator({ profile, dtr }) {
         </div>
         <button
           onClick={refreshFromLogs}
-          className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-3 rounded-xl text-xs transition-colors"
+          className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold px-4 py-3 rounded-xl text-xs transition-all active:scale-[0.96]"
         >
           <RotateCcw className="w-3.5 h-3.5" /> Refresh from Logged Hours
         </button>
         <button
           onClick={() => window.print()}
-          className="flex items-center gap-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-5 py-3 rounded-xl text-xs shadow-glow transition-colors ml-auto"
+          className="flex items-center gap-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black px-5 py-3 rounded-xl text-xs shadow-glow transition-all active:scale-[0.96] ml-auto"
         >
           <Printer className="w-4 h-4" /> Print / Save as PDF
         </button>
@@ -100,7 +100,7 @@ export default function DTRGenerator({ profile, dtr }) {
             value={office}
             onChange={(e) => setOffice(e.target.value)}
             placeholder="Office / Unit"
-            className="mt-1 block mx-auto w-full max-w-md text-center text-sm font-semibold uppercase bg-transparent border-0 outline-none focus:bg-amber-50 print:focus:bg-transparent"
+            className="mt-1 block mx-auto w-full max-w-md text-center text-sm font-semibold uppercase bg-transparent border-0 outline-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent"
           />
         </div>
 
@@ -112,7 +112,7 @@ export default function DTRGenerator({ profile, dtr }) {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Juan Dela Cruz"
-              className="border-b border-slate-500 outline-none bg-transparent font-bold px-1 w-[65%] focus:bg-amber-50 print:focus:bg-transparent print:border-black"
+              className="border-b border-slate-500 outline-none bg-transparent font-bold px-1 w-[65%] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
             />
           </div>
           <div className="text-right">
@@ -130,7 +130,7 @@ export default function DTRGenerator({ profile, dtr }) {
                 type="text"
                 value={regularHours}
                 onChange={(e) => setRegularHours(e.target.value)}
-                className="border-b border-slate-400 outline-none bg-transparent px-1 w-44 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
+                className="border-b border-slate-400 outline-none bg-transparent px-1 w-44 transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
               />
             </div>
             <div>
@@ -139,7 +139,7 @@ export default function DTRGenerator({ profile, dtr }) {
                 type="text"
                 value={saturdayHours}
                 onChange={(e) => setSaturdayHours(e.target.value)}
-                className="border-b border-slate-400 outline-none bg-transparent px-1 w-44 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
+                className="border-b border-slate-400 outline-none bg-transparent px-1 w-44 transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
               />
             </div>
           </div>
@@ -166,19 +166,19 @@ export default function DTRGenerator({ profile, dtr }) {
                 <td className="border border-slate-400 text-center font-semibold print:border-black">{idx + 1}</td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.am_in} onChange={(e) => updateCell(idx, 'am_in', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.am_out} onChange={(e) => updateCell(idx, 'am_out', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.pm_in} onChange={(e) => updateCell(idx, 'pm_in', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.pm_out} onChange={(e) => updateCell(idx, 'pm_out', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 text-center font-semibold print:border-black">
                   {dailyTotals[idx] > 0 ? dailyTotals[idx].toFixed(2) : ''}
@@ -212,19 +212,19 @@ export default function DTRGenerator({ profile, dtr }) {
               type="text"
               value={verifierName}
               onChange={(e) => setVerifierName(e.target.value)}
-              className="border-t border-slate-600 pt-1 font-bold text-center bg-transparent outline-none w-full focus:bg-amber-50 print:focus:bg-transparent print:border-black"
+              className="border-t border-slate-600 pt-1 font-bold text-center bg-transparent outline-none w-full transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent print:border-black"
             />
             <input
               type="text"
               value={verifierTitle}
               onChange={(e) => setVerifierTitle(e.target.value)}
-              className="text-center bg-transparent outline-none w-full mt-0.5 focus:bg-amber-50 print:focus:bg-transparent"
+              className="text-center bg-transparent outline-none w-full mt-0.5 transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent"
             />
             <input
               type="text"
               value={verifierOffice}
               onChange={(e) => setVerifierOffice(e.target.value)}
-              className="text-center bg-transparent outline-none w-full mt-0.5 focus:bg-amber-50 print:focus:bg-transparent"
+              className="text-center bg-transparent outline-none w-full mt-0.5 transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent"
             />
           </div>
         </div>
