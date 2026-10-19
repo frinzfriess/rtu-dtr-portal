@@ -28,6 +28,9 @@ input[type="time"], input[type="date"] {
 }
 
 @media print {
-  @page { size: letter portrait; margin: 12mm; }
+  @page { size: A4 portrait; margin: 10mm; }
   body { background: #fff !important; }
+  .dtr-sheet { max-width: none !important; width: 100% !important; }
+  .dtr-sheet table { page-break-inside: avoid; break-inside: avoid; }
+  .dtr-sheet tr { page-break-inside: avoid; break-inside: avoid; }
 }

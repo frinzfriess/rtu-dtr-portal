@@ -93,8 +93,8 @@ export default function DTRGenerator({ profile, dtr }) {
 
       {/* PRINTABLE SHEET */}
       <div className="dtr-sheet bg-white text-slate-900 border border-slate-200 rounded-3xl shadow-soft print:shadow-none print:border-0 print:rounded-none p-6 sm:p-10 max-w-[850px] mx-auto font-serif print:p-0">
-        <div className="text-center mb-5">
-          <h1 className="text-xl font-bold uppercase tracking-wide">Daily Time Record</h1>
+        <div className="text-center mb-5 print:mb-2">
+          <h1 className="text-xl font-bold uppercase tracking-wide print:text-lg">Daily Time Record</h1>
           <input
             type="text"
             value={office}
@@ -104,7 +104,7 @@ export default function DTRGenerator({ profile, dtr }) {
           />
         </div>
 
-        <div className="flex flex-wrap justify-between items-end gap-4 mb-3 text-sm">
+        <div className="flex flex-wrap justify-between items-end gap-4 mb-3 print:mb-1 text-sm">
           <div className="flex-1 min-w-[220px]">
             <span className="font-semibold">Name: </span>
             <input
@@ -121,7 +121,7 @@ export default function DTRGenerator({ profile, dtr }) {
           </div>
         </div>
 
-        <div className="text-xs mb-4 leading-relaxed">
+        <div className="text-xs mb-4 print:mb-2 leading-relaxed">
           <p className="font-semibold">Official hours for arrival and departure</p>
           <div className="flex flex-wrap gap-6 mt-1">
             <div>
@@ -145,13 +145,13 @@ export default function DTRGenerator({ profile, dtr }) {
           </div>
         </div>
 
-        <table className="w-full border-collapse text-[11px] mb-1">
+        <table className="w-full border-collapse text-[11px] print:text-[9px] mb-1">
           <thead>
             <tr>
-              <th rowSpan={2} className="border border-slate-600 px-1 py-1 w-8 print:border-black">Day</th>
-              <th colSpan={2} className="border border-slate-600 px-1 py-1 print:border-black">A.M.</th>
-              <th colSpan={2} className="border border-slate-600 px-1 py-1 print:border-black">P.M.</th>
-              <th rowSpan={2} className="border border-slate-600 px-1 py-1 w-16 print:border-black">Total Hours</th>
+              <th rowSpan={2} className="border border-slate-600 px-1 py-1 print:py-0.5 w-8 print:border-black">Day</th>
+              <th colSpan={2} className="border border-slate-600 px-1 py-1 print:py-0.5 print:border-black">A.M.</th>
+              <th colSpan={2} className="border border-slate-600 px-1 py-1 print:py-0.5 print:border-black">P.M.</th>
+              <th rowSpan={2} className="border border-slate-600 px-1 py-1 print:py-0.5 w-16 print:border-black">Total Hours</th>
             </tr>
             <tr>
               <th className="border border-slate-600 px-1 py-0.5 print:border-black">Arrival</th>
@@ -166,19 +166,19 @@ export default function DTRGenerator({ profile, dtr }) {
                 <td className="border border-slate-400 text-center font-semibold print:border-black">{idx + 1}</td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.am_in} onChange={(e) => updateCell(idx, 'am_in', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 print:py-0 text-[10px] print:text-[9px] print:h-[15px] print:leading-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.am_out} onChange={(e) => updateCell(idx, 'am_out', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 print:py-0 text-[10px] print:text-[9px] print:h-[15px] print:leading-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.pm_in} onChange={(e) => updateCell(idx, 'pm_in', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 print:py-0 text-[10px] print:text-[9px] print:h-[15px] print:leading-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 p-0 print:border-black">
                   <input type="time" value={row.pm_out} onChange={(e) => updateCell(idx, 'pm_out', e.target.value)}
-                    className="w-full text-center bg-transparent outline-none py-0.5 text-[10px] transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
+                    className="w-full text-center bg-transparent outline-none py-0.5 print:py-0 text-[10px] print:text-[9px] print:h-[15px] print:leading-none transition-colors duration-200 focus:bg-amber-50 print:focus:bg-transparent" />
                 </td>
                 <td className="border border-slate-400 text-center font-semibold print:border-black">
                   {dailyTotals[idx] > 0 ? dailyTotals[idx].toFixed(2) : ''}
@@ -188,26 +188,26 @@ export default function DTRGenerator({ profile, dtr }) {
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={5} className="border border-slate-600 text-right font-bold px-2 py-1.5 print:border-black">
+              <td colSpan={5} className="border border-slate-600 text-right font-bold px-2 py-1.5 print:py-0.5 print:border-black">
                 TOTAL HOURS FOR {monthLabel ? monthLabel.toUpperCase() : 'THE MONTH'}
               </td>
-              <td className="border border-slate-600 text-center font-bold py-1.5 print:border-black">{monthTotal.toFixed(2)}</td>
+              <td className="border border-slate-600 text-center font-bold py-1.5 print:py-0.5 print:border-black">{monthTotal.toFixed(2)}</td>
             </tr>
           </tfoot>
         </table>
 
-        <p className="text-[10px] mt-4 leading-relaxed">
+        <p className="text-[10px] mt-4 print:mt-2 leading-relaxed">
           I CERTIFY on my honor that the above is a true and correct report of hours of work performed, record of which was made daily at the time of arrival and departure from office.
         </p>
 
-        <div className="flex flex-wrap justify-between gap-8 mt-10 text-center text-[10px]">
+        <div className="flex flex-wrap justify-between gap-8 mt-10 print:mt-6 text-center text-[10px]">
           <div className="flex-1 min-w-[220px]">
             <div className="border-t border-slate-600 pt-1 font-bold print:border-black">{name || ' '}</div>
             <p className="mt-0.5">Signature of Employee</p>
           </div>
 
           <div className="flex-1 min-w-[220px]">
-            <p className="font-semibold mb-8 text-left">Verified as to prescribed office hours:</p>
+            <p className="font-semibold mb-8 print:mb-4 text-left">Verified as to prescribed office hours:</p>
             <input
               type="text"
               value={verifierName}
